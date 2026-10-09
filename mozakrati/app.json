@@ -1,0 +1,72 @@
+{
+  "expo": {
+    "name": "مذاكرتي",
+    "slug": "mozakrati",
+    "scheme": "mozakrati",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "extra": {
+      "supportsRTL": true,
+      "forcesRTL": true
+    },
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#5B5BD6"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mozakrati.app"
+    },
+    "android": {
+      "package": "com.mozakrati.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#5B5BD6",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "single",
+      "bundler": "metro",
+      "favicon": "./assets/favicon.png",
+      "name": "مذاكرتي",
+      "shortName": "مذاكرتي",
+      "lang": "ar",
+      "themeColor": "#5B5BD6",
+      "backgroundColor": "#F4F5FA"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sharing",
+      [
+        "expo-localization",
+        {
+          "supportsRTL": true,
+          "forcesRTL": true
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/android-icon-monochrome.png",
+          "color": "#5B5BD6"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": false
+    }
+  }
+}
