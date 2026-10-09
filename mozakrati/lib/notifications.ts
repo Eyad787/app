@@ -26,7 +26,7 @@ export function configureNotifications() {
   });
   if (Platform.OS === 'android') {
     Notifications.setNotificationChannelAsync(POMODORO_CHANNEL, {
-      name: 'مؤقت المذاكرة',
+      name: 'Study timer',
       importance: Notifications.AndroidImportance.HIGH,
       vibrationPattern: [0, 300, 150, 300],
       sound: 'default',

@@ -52,22 +52,22 @@ export default function HomeScreen() {
   const days = streak(data.studySessions, today);
   const timerOn = pomodoro.state.status !== 'idle';
 
-  const hello = `${greeting(now)}${data.profile.name ? ` يا ${data.profile.name.split(' ')[0]}` : ''} 👋`;
+  const hello = `${greeting(now)}${data.profile.name ? `, ${data.profile.name.split(' ')[0]}` : ''} 👋`;
 
   const studyCard = (
     <Card style={[styles.hero, { backgroundColor: colors.primary }]}>
       <View style={styles.heroTop}>
         <View style={styles.flex}>
           <AppText variant="caption" color={colors.onPrimary} style={styles.dim}>
-            ذاكرت النهارده
+            Studied today
           </AppText>
           <AppText variant="title" color={colors.onPrimary}>
             {formatDuration(studied)}
           </AppText>
           {goal > 0 ? (
             <AppText variant="caption" color={colors.onPrimary} style={styles.dim}>
-              من هدف {formatDuration(goal)}
-              {days > 1 ? ` • 🔥 ${days} أيام ورا بعض` : ''}
+              of your {formatDuration(goal)} goal
+              {days > 1 ? ` • 🔥 ${days}-day streak` : ''}
             </AppText>
           ) : null}
         </View>
@@ -78,28 +78,28 @@ export default function HomeScreen() {
         onPress={() => router.push('/pomodoro')}
         style={[styles.startBtn, { backgroundColor: colors.card }]}
         padded={false}
-        accessibilityLabel="ابدأ مذاكرة"
+        accessibilityLabel="Start studying"
       >
         <Ionicons name={timerOn ? 'time' : 'play'} size={20} color={colors.primary} />
         <AppText variant="label" bold color={colors.primary}>
           {timerOn
-            ? `${phaseLabel(pomodoro.state.phase)} • ${formatClock(pomodoro.remainingMs)}${pomodoro.state.status === 'paused' ? ' (موقوف)' : ''}`
-            : 'ابدأ مذاكرة'}
+            ? `${phaseLabel(pomodoro.state.phase)} • ${formatClock(pomodoro.remainingMs)}${pomodoro.state.status === 'paused' ? ' (paused)' : ''}`
+            : 'Start studying'}
         </AppText>
       </Card>
     </Card>
   );
 
   const classesSection = (
-    <Section title="محاضرات النهارده" actionLabel="الجدول كله" onAction={() => router.push('/schedule')}>
+    <Section title="Today's classes" actionLabel="Full schedule" onAction={() => router.push('/schedule')}>
       {todayClasses.length === 0 ? (
         <Card>
           <EmptyState
             compact
             icon="cafe-outline"
-            title={termClasses.length === 0 ? 'جدولك لسه فاضي' : 'مفيش محاضرات النهارده 🎉'}
-            message={termClasses.length === 0 ? 'ضيف محاضراتك وسكاشنك علشان تظهرلك هنا كل يوم.' : 'استغل اليوم في المذاكرة أو المراجعة.'}
-            actionLabel={termClasses.length === 0 ? 'أضف حصة' : undefined}
+            title={termClasses.length === 0 ? 'Your schedule is empty' : 'No classes today 🎉'}
+            message={termClasses.length === 0 ? 'Add your lectures and sections so they show up here every day.' : 'A great day to study or review.'}
+            actionLabel={termClasses.length === 0 ? 'Add class' : undefined}
             onAction={() => router.push({ pathname: '/class-form', params: { day: String(now.getDay()) } })}
           />
         </Card>
@@ -118,7 +118,7 @@ export default function HomeScreen() {
   );
 
   const examSection = (
-    <Section title="أقرب امتحان أو تسليم" actionLabel={upcoming.length > 1 ? `الكل (${upcoming.length})` : undefined} onAction={() => router.push('/exams')}>
+    <Section title="Next exam or deadline" actionLabel={upcoming.length > 1 ? `All (${upcoming.length})` : undefined} onAction={() => router.push('/exams')}>
       {nearest ? (
         <ExamCard
           big
@@ -133,9 +133,9 @@ export default function HomeScreen() {
           <EmptyState
             compact
             icon="document-text-outline"
-            title="مفيش امتحانات أو تسليمات جاية"
-            message="ضيف مواعيد الكويزات والميدترم والتسليمات علشان نفكّرك بيها."
-            actionLabel="أضف امتحان"
+            title="No upcoming exams or deadlines"
+            message="Add your quizzes, midterms and deadlines so you never miss one."
+            actionLabel="Add exam"
             onAction={() => router.push('/exam-form')}
           />
         </Card>
@@ -144,14 +144,14 @@ export default function HomeScreen() {
   );
 
   const tasksSection = (
-    <Section title="مهام النهارده" actionLabel="كل المهام" onAction={() => router.push('/tasks')}>
+    <Section title="Today's tasks" actionLabel="All tasks" onAction={() => router.push('/tasks')}>
       {todayTasks.length === 0 ? (
         <Card>
           <EmptyState
             compact
             icon="checkmark-done-outline"
-            title="مفيش مهام مستعجلة النهارده"
-            actionLabel="أضف مهمة"
+            title="Nothing urgent today"
+            actionLabel="Add task"
             onAction={() => router.push({ pathname: '/task-form', params: { due: today } })}
           />
         </Card>
@@ -176,7 +176,7 @@ export default function HomeScreen() {
     <Screen
       title={hello}
       subtitle={formatDayDate(today, true)}
-      actions={isWide ? null : <IconButton icon="settings-outline" label="الإعدادات" onPress={() => router.push('/settings')} />}
+      actions={isWide ? null : <IconButton icon="settings-outline" label="Settings" onPress={() => router.push('/settings')} />}
     >
       {subjects.length === 0 ? (
         <Card onPress={() => router.push('/subject-form')} style={{ backgroundColor: colors.warningSoft }}>
@@ -184,10 +184,10 @@ export default function HomeScreen() {
             <Ionicons name="book" size={26} color={colors.warning} />
             <View style={styles.flex}>
               <AppText variant="label" bold>
-                ابدأ بإضافة موادك
+                Start by adding your subjects
               </AppText>
               <AppText variant="caption" muted>
-                كل حاجة في التطبيق (الجدول، الامتحانات، المذاكرة) بتتربط بالمواد.
+                Everything in the app (schedule, exams, study time) is linked to your subjects.
               </AppText>
             </View>
             <Ionicons name="add-circle" size={28} color={colors.warning} />

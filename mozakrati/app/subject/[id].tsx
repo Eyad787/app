@@ -12,7 +12,7 @@ import { Columns } from '@/components/Grid';
 import { Section } from '@/components/Section';
 import { TaskRow } from '@/components/TaskRow';
 import { MAX_CONTENT_WIDTH } from '@/constants/layout';
-import { WEEKDAY_NAMES } from '@/constants/labels';
+import { WEEKDAY_SHORT } from '@/constants/labels';
 import { useToday } from '@/hooks/useNow';
 import { usePomodoro } from '@/hooks/usePomodoro';
 import { useResponsive } from '@/hooks/useResponsive';
@@ -36,8 +36,8 @@ export default function SubjectDetails() {
   if (!subject) {
     return (
       <View style={[styles.flex, { backgroundColor: colors.background }]}>
-        <Stack.Screen options={{ title: 'المادة' }} />
-        <EmptyState icon="help-circle-outline" title="المادة دي مش موجودة" actionLabel="رجوع للمواد" onAction={() => router.replace('/subjects')} />
+        <Stack.Screen options={{ title: 'Subject' }} />
+        <EmptyState icon="help-circle-outline" title="This subject doesn't exist" actionLabel="Back to subjects" onAction={() => router.replace('/subjects')} />
       </View>
     );
   }
@@ -62,7 +62,7 @@ export default function SubjectDetails() {
         options={{
           title: subject.name,
           headerRight: () => (
-            <Button title="تعديل" icon="create-outline" variant="ghost" small onPress={() => router.push({ pathname: '/subject-form', params: { id: subject.id } })} />
+            <Button title="Edit" icon="create-outline" variant="ghost" small onPress={() => router.push({ pathname: '/subject-form', params: { id: subject.id } })} />
           ),
         }}
       />
@@ -72,9 +72,9 @@ export default function SubjectDetails() {
             {subject.name}
           </AppText>
           <View style={styles.stats}>
-            <Stat label="الساعات المعتمدة" value={String(subject.creditHours)} />
-            <Stat label="وقت المذاكرة" value={formatDuration(studied)} />
-            <Stat label="جلسات" value={String(sessions)} />
+            <Stat label="Credit hours" value={String(subject.creditHours)} />
+            <Stat label="Study time" value={formatDuration(studied)} />
+            <Stat label="Sessions" value={String(sessions)} />
           </View>
           {subject.instructor ? (
             <View style={styles.row}>
@@ -84,25 +84,25 @@ export default function SubjectDetails() {
               </AppText>
             </View>
           ) : null}
-          <Button title="ذاكر المادة دي" icon="play" variant="secondary" onPress={startStudy} style={styles.studyBtn} />
+          <Button title="Study this subject" icon="play" variant="secondary" onPress={startStudy} style={styles.studyBtn} />
         </Card>
 
         <Columns wide={isWide}>
           <>
             <Section
-              title="مواعيدها في الجدول"
-              actionLabel="+ أضف"
+              title="Schedule"
+              actionLabel="+ Add"
               onAction={() => router.push({ pathname: '/class-form', params: { subjectId: subject.id } })}
             >
               {slots.length === 0 ? (
                 <AppText variant="caption" muted>
-                  لسه مش متضافة في الجدول.
+                  Not in your schedule yet.
                 </AppText>
               ) : (
                 slots.map((c) => (
                   <View key={c.id} style={styles.slot}>
                     <AppText variant="caption" bold style={styles.dayName}>
-                      {WEEKDAY_NAMES[c.day]}
+                      {WEEKDAY_SHORT[c.day]}
                     </AppText>
                     <View style={styles.flex}>
                       <ClassCard item={c} subject={subject} onPress={() => router.push({ pathname: '/class-form', params: { id: c.id } })} />
@@ -112,13 +112,13 @@ export default function SubjectDetails() {
               )}
             </Section>
             <Section
-              title="المهام"
-              actionLabel="+ أضف"
+              title="Tasks"
+              actionLabel="+ Add"
               onAction={() => router.push({ pathname: '/task-form', params: { subjectId: subject.id } })}
             >
               {tasks.length === 0 ? (
                 <AppText variant="caption" muted>
-                  مفيش مهام للمادة دي.
+                  No tasks for this subject.
                 </AppText>
               ) : (
                 tasks.map((t) => (
@@ -135,13 +135,13 @@ export default function SubjectDetails() {
             </Section>
           </>
           <Section
-            title="الامتحانات والتسليمات"
-            actionLabel="+ أضف"
+            title="Exams & deadlines"
+            actionLabel="+ Add"
             onAction={() => router.push({ pathname: '/exam-form', params: { subjectId: subject.id } })}
           >
             {upcoming.length + past.length === 0 ? (
               <AppText variant="caption" muted>
-                مفيش امتحانات متسجلة.
+                No exams yet.
               </AppText>
             ) : (
               [...upcoming, ...past].map((e) => (
@@ -185,5 +185,5 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 12 },
   studyBtn: { marginTop: 14, backgroundColor: '#FFFFFF' },
   slot: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  dayName: { width: 52 },
+  dayName: { width: 40 },
 });

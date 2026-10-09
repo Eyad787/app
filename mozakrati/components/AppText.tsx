@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, Text, type TextProps } from 'react-native';
+import { StyleSheet, Text, type TextProps } from 'react-native';
 
 import { useColors } from '@/hooks/useTheme';
 
@@ -12,11 +12,7 @@ type Props = TextProps & {
   center?: boolean;
 };
 
-/**
- * نص موحّد للتطبيق كله.
- * على الموبايل في وضع RTL، textAlign: 'left' معناها "بداية السطر" (يعني اليمين).
- * على الويب الصفحة كلها dir="rtl" فبنستخدم 'right' مباشرة.
- */
+/** نص موحّد للتطبيق كله */
 export function AppText({ variant = 'body', muted, color, bold, center, style, ...rest }: Props) {
   const colors = useColors();
   return (
@@ -35,7 +31,7 @@ export function AppText({ variant = 'body', muted, color, bold, center, style, .
 }
 
 const styles = StyleSheet.create({
-  base: { textAlign: Platform.OS === 'web' ? 'right' : 'left', writingDirection: 'rtl' },
+  base: { textAlign: 'left' },
   display: { fontSize: 34, fontWeight: '800', lineHeight: 44 },
   title: { fontSize: 26, fontWeight: '800', lineHeight: 36 },
   heading: { fontSize: 18, fontWeight: '700', lineHeight: 27 },

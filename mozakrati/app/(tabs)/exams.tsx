@@ -27,17 +27,17 @@ export default function ExamsScreen() {
 
   return (
     <Screen
-      title="الامتحانات والتسليمات"
-      subtitle={urgent > 0 ? `🔴 ${countWord(urgent, 'حاجة واحدة', 'حاجتين', 'حاجات', 'حاجة')} فاضلها أقل من 3 أيام` : undefined}
+      title="Exams & deadlines"
+      subtitle={urgent > 0 ? `🔴 ${countWord(urgent, 'item')} due in less than 3 days` : undefined}
       onAdd={() => router.push('/exam-form')}
-      addLabel="أضف امتحان"
+      addLabel="Add exam"
       toolbar={
         <Segmented<Tab>
           value={tab}
           onChange={setTab}
           options={[
-            { value: 'upcoming', label: 'قادم', count: upcoming.length },
-            { value: 'past', label: 'فات / خلص', count: past.length },
+            { value: 'upcoming', label: 'Upcoming', count: upcoming.length },
+            { value: 'past', label: 'Past / done', count: past.length },
           ]}
         />
       }
@@ -46,13 +46,13 @@ export default function ExamsScreen() {
         tab === 'upcoming' ? (
           <EmptyState
             icon="document-text-outline"
-            title="مفيش امتحانات أو تسليمات جاية"
-            message="ضيف الكويزات والميدترم والفاينل والـ Assignments، وهنعدّلك الأيام الفاضلة لكل واحد."
-            actionLabel="أضف امتحان أو تسليم"
+            title="No upcoming exams or deadlines"
+            message="Add your quizzes, midterms, finals and assignments, and we'll count down the days for each one."
+            actionLabel="Add exam or deadline"
             onAction={() => router.push('/exam-form')}
           />
         ) : (
-          <EmptyState icon="archive-outline" title="لسه مفيش حاجة فاتت" message="الامتحانات اللي عدّى ميعادها والتسليمات اللي خلصتها هتظهر هنا." />
+          <EmptyState icon="archive-outline" title="Nothing here yet" message="Past exams and deadlines you've finished will show up here." />
         )
       ) : (
         <Grid columns={columns}>

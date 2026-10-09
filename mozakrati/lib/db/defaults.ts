@@ -30,7 +30,7 @@ export const DEFAULT_SETTINGS: Settings = {
 
 export const FIRST_TERM_ID = 'term-1';
 
-export function defaultTerm(name = 'الترم الحالي'): Term {
+export function defaultTerm(name = 'Current term'): Term {
   return { id: FIRST_TERM_ID, name, createdAt: new Date().toISOString(), archivedAt: null };
 }
 

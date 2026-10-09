@@ -29,7 +29,7 @@ export function ExamCard({ exam, subject, today, onPress, onToggleDone, big }: P
     <Card onPress={onPress} accent={color}>
       <View style={styles.row}>
         {submission && onToggleDone ? (
-          <Checkbox checked={exam.done} onToggle={onToggleDone} color={color} label="خلصت" />
+          <Checkbox checked={exam.done} onToggle={onToggleDone} color={color} label="Done" />
         ) : null}
         <View style={styles.body}>
           <View style={styles.top}>
@@ -44,7 +44,7 @@ export function ExamCard({ exam, subject, today, onPress, onToggleDone, big }: P
             numberOfLines={2}
             style={submission && exam.done ? { textDecorationLine: 'line-through', color: colors.textMuted } : undefined}
           >
-            {subject?.name ?? 'عام'}
+            {subject?.name ?? 'General'}
           </AppText>
           <View style={styles.meta}>
             <View style={styles.metaItem}>

@@ -31,9 +31,9 @@ type PomodoroContextValue = {
 const PomodoroContext = createContext<PomodoroContextValue | null>(null);
 
 const NOTIFY_TEXT: Record<PomodoroPhase, { title: string; body: string }> = {
-  work: { title: 'برافو! خلصت جلسة مذاكرة 🎉', body: 'خد راحة صغيرة وارجع كمّل.' },
-  shortBreak: { title: 'الراحة خلصت ⏰', body: 'يلا نرجع للمذاكرة.' },
-  longBreak: { title: 'الراحة الطويلة خلصت ⏰', body: 'جاهز لدورة مذاكرة جديدة؟' },
+  work: { title: 'Great job! Focus session done 🎉', body: 'Take a short break, then keep going.' },
+  shortBreak: { title: 'Break is over ⏰', body: "Let's get back to studying." },
+  longBreak: { title: 'Long break is over ⏰', body: 'Ready for a new round?' },
 };
 
 /** لو اكتشفنا إن المرحلة خلصت بعد الوقت ده، يبقى التطبيق كان في الخلفية والإشعار كفاية */
@@ -151,7 +151,7 @@ export function PomodoroProvider({ children }: { children: ReactNode }) {
 
 export function usePomodoro(): PomodoroContextValue {
   const ctx = useContext(PomodoroContext);
-  if (!ctx) throw new Error('usePomodoro لازم يتستخدم جوه PomodoroProvider');
+  if (!ctx) throw new Error('usePomodoro must be used inside PomodoroProvider');
   return ctx;
 }
 

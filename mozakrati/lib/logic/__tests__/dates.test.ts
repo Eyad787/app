@@ -4,7 +4,9 @@ import { test } from 'node:test';
 
 import {
   addDays,
+  countWord,
   diffDays,
+  formatDayDate,
   formatDuration,
   formatTime,
   isValidDateKey,
@@ -43,22 +45,29 @@ test('الأسبوع الدراسي بيبدأ السبت', () => {
 });
 
 test('formatTime بنظام 12 ساعة', () => {
-  assert.equal(formatTime('00:05'), '12:05 ص');
-  assert.equal(formatTime('09:30'), '9:30 ص');
-  assert.equal(formatTime('12:00'), '12:00 م');
-  assert.equal(formatTime('13:45'), '1:45 م');
+  assert.equal(formatTime('00:05'), '12:05 AM');
+  assert.equal(formatTime('09:30'), '9:30 AM');
+  assert.equal(formatTime('12:00'), '12:00 PM');
+  assert.equal(formatTime('13:45'), '1:45 PM');
 });
 
-test('formatDuration بالعامية', () => {
-  assert.equal(formatDuration(0), '0 دقيقة');
-  assert.equal(formatDuration(1), 'دقيقة');
-  assert.equal(formatDuration(2), 'دقيقتين');
-  assert.equal(formatDuration(5), '5 دقايق');
-  assert.equal(formatDuration(25), '25 دقيقة');
-  assert.equal(formatDuration(60), 'ساعة');
-  assert.equal(formatDuration(120), 'ساعتين');
-  assert.equal(formatDuration(80), 'ساعة و 20 دقيقة');
-  assert.equal(formatDuration(5 * 60 + 2), '5 ساعات و دقيقتين');
+test('formatDayDate', () => {
+  assert.equal(formatDayDate('2026-10-09'), 'Friday, Oct 9');
+  assert.equal(formatDayDate('2026-10-09', true), 'Friday, Oct 9, 2026');
+});
+
+test('formatDuration', () => {
+  assert.equal(formatDuration(0), '0 min');
+  assert.equal(formatDuration(25), '25 min');
+  assert.equal(formatDuration(60), '1 hr');
+  assert.equal(formatDuration(80), '1 hr 20 min');
+  assert.equal(formatDuration(5 * 60 + 2), '5 hr 2 min');
+});
+
+test('countWord', () => {
+  assert.equal(countWord(1, 'day'), '1 day');
+  assert.equal(countWord(3, 'day'), '3 days');
+  assert.equal(countWord(2, 'class', 'classes'), '2 classes');
 });
 
 test('normalizeTimeInput', () => {

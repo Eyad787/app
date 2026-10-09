@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "مذاكرتي",
+    "name": "Mozakrati",
     "slug": "mozakrati",
     "scheme": "mozakrati",
     "version": "1.0.0",
@@ -8,8 +8,8 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "extra": {
-      "supportsRTL": true,
-      "forcesRTL": true
+      "supportsRTL": false,
+      "forcesRTL": false
     },
     "splash": {
       "image": "./assets/splash-icon.png",
@@ -34,9 +34,9 @@
       "output": "single",
       "bundler": "metro",
       "favicon": "./assets/favicon.png",
-      "name": "مذاكرتي",
-      "shortName": "مذاكرتي",
-      "lang": "ar",
+      "name": "Mozakrati",
+      "shortName": "Mozakrati",
+      "lang": "en",
       "themeColor": "#5B5BD6",
       "backgroundColor": "#F4F5FA"
     },
@@ -46,8 +46,8 @@
       [
         "expo-localization",
         {
-          "supportsRTL": true,
-          "forcesRTL": true
+          "supportsRTL": false,
+          "forcesRTL": false
         }
       ],
       [

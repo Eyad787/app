@@ -42,11 +42,11 @@ function AppStack() {
     >
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="onboarding" options={{ headerShown: false, gestureEnabled: false }} />
-      <Stack.Screen name="subject/[id]" options={{ title: 'المادة' }} />
-      <Stack.Screen name="subject-form" options={{ presentation: 'modal', title: 'مادة' }} />
-      <Stack.Screen name="class-form" options={{ presentation: 'modal', title: 'حصة' }} />
-      <Stack.Screen name="exam-form" options={{ presentation: 'modal', title: 'امتحان أو تسليم' }} />
-      <Stack.Screen name="task-form" options={{ presentation: 'modal', title: 'مهمة' }} />
+      <Stack.Screen name="subject/[id]" options={{ title: 'Subject' }} />
+      <Stack.Screen name="subject-form" options={{ presentation: 'modal', title: 'Subject' }} />
+      <Stack.Screen name="class-form" options={{ presentation: 'modal', title: 'Class' }} />
+      <Stack.Screen name="exam-form" options={{ presentation: 'modal', title: 'Exam or deadline' }} />
+      <Stack.Screen name="task-form" options={{ presentation: 'modal', title: 'Task' }} />
     </Stack>
   );
 }

@@ -13,7 +13,7 @@ export function CountdownBadge({ date, today, done }: { date: DateKey; today: Da
     return (
       <View style={[styles.badge, { backgroundColor: colors.successSoft }]}>
         <AppText variant="tiny" color={colors.success}>
-          خلصت ✓
+          Done ✓
         </AppText>
       </View>
     );

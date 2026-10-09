@@ -22,7 +22,7 @@ export default function SubjectForm() {
   const [color, setColor] = useState<string>(existing?.color ?? SUBJECT_COLORS[subjects.length % SUBJECT_COLORS.length]);
   const [touched, setTouched] = useState(false);
 
-  const error = touched && !name.trim() ? 'اكتب اسم المادة' : null;
+  const error = touched && !name.trim() ? 'Enter the subject name' : null;
 
   const save = () => {
     setTouched(true);
@@ -36,9 +36,9 @@ export default function SubjectForm() {
   const remove = async () => {
     if (!existing) return;
     const ok = await confirmAsync({
-      title: 'حذف المادة',
-      message: `هيتمسح "${existing.name}" ومواعيدها في الجدول وامتحاناتها. المهام ووقت المذاكرة هيفضلوا بس من غير مادة.`,
-      confirmText: 'احذف',
+      title: 'Delete subject',
+      message: `"${existing.name}" will be deleted along with its classes and exams. Its tasks and study time will be kept without a subject.`,
+      confirmText: 'Delete',
     });
     if (!ok) return;
     deleteSubject(existing.id);
@@ -46,22 +46,22 @@ export default function SubjectForm() {
   };
 
   return (
-    <FormScreen title={existing ? 'تعديل المادة' : 'مادة جديدة'} onSave={save} onDelete={existing ? remove : undefined}>
-      <Field label="اسم المادة" error={error}>
-        <TextField value={name} onChangeText={setName} placeholder="مثلاً: رياضيات 2" autoFocus={!existing} returnKeyType="done" maxLength={80} />
+    <FormScreen title={existing ? 'Edit subject' : 'New subject'} onSave={save} onDelete={existing ? remove : undefined}>
+      <Field label="Subject name" error={error}>
+        <TextField value={name} onChangeText={setName} placeholder="e.g. Math 2" autoFocus={!existing} returnKeyType="done" maxLength={80} />
       </Field>
-      <Field label="اسم الدكتور" hint="اختياري">
-        <TextField value={instructor} onChangeText={setInstructor} placeholder="د. ..." maxLength={80} />
+      <Field label="Professor" hint="Optional">
+        <TextField value={instructor} onChangeText={setInstructor} placeholder="Dr. ..." maxLength={80} />
       </Field>
-      <Field label="الساعات المعتمدة">
-        <Stepper value={hours} onChange={setHours} min={0} max={12} suffix="ساعات" />
+      <Field label="Credit hours">
+        <Stepper value={hours} onChange={setHours} min={0} max={12} suffix="hrs" />
       </Field>
-      <Field label="لون المادة">
+      <Field label="Color">
         <ColorPicker value={color} onChange={setColor} />
       </Field>
       <View style={[styles.preview, { backgroundColor: color }]}>
         <AppText variant="heading" color="#FFFFFF" numberOfLines={1}>
-          {name.trim() || 'اسم المادة'}
+          {name.trim() || 'Subject name'}
         </AppText>
       </View>
     </FormScreen>

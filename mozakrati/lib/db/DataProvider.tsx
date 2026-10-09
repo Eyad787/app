@@ -189,7 +189,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
 export function useData(): DataContextValue {
   const ctx = useContext(DataContext);
-  if (!ctx) throw new Error('useData لازم يتستخدم جوه DataProvider');
+  if (!ctx) throw new Error('useData must be used inside DataProvider');
   return ctx;
 }
 

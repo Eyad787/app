@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import type { ReactNode } from 'react';
-import { Platform, Pressable, StyleSheet, TextInput, View, type TextInputProps } from 'react-native';
+import { Pressable, StyleSheet, TextInput, View, type TextInputProps } from 'react-native';
 
 import { SUBJECT_COLORS } from '@/constants/colors';
 import { useColors } from '@/hooks/useTheme';
@@ -71,7 +71,7 @@ export function PickerButton({
         {value ?? placeholder}
       </AppText>
       {value && onClear ? (
-        <Pressable onPress={onClear} hitSlop={10} accessibilityLabel="مسح">
+        <Pressable onPress={onClear} hitSlop={10} accessibilityLabel="Clear">
           <Ionicons name="close-circle" size={20} color={colors.textMuted} />
         </Pressable>
       ) : null}
@@ -84,7 +84,7 @@ export function SubjectPicker({
   value,
   onChange,
   allowNone,
-  noneLabel = 'عامة',
+  noneLabel = 'General',
 }: {
   subjects: Subject[];
   value: string | null;
@@ -114,7 +114,7 @@ export function ColorPicker({ value, onChange }: { value: string; onChange: (c: 
             onPress={() => onChange(c)}
             accessibilityRole="radio"
             accessibilityState={{ selected: active }}
-            accessibilityLabel={`لون ${c}`}
+            accessibilityLabel={`Color ${c}`}
             style={[styles.swatch, { backgroundColor: c, borderColor: active ? colors.text : 'transparent' }]}
           >
             {active ? <Ionicons name="checkmark" size={20} color="#FFFFFF" /> : null}
@@ -146,7 +146,7 @@ export function Stepper({
       onPress={() => !disabled && onChange(next)}
       disabled={disabled}
       accessibilityRole="button"
-      accessibilityLabel={icon === 'add' ? 'زوّد' : 'قلّل'}
+      accessibilityLabel={icon === 'add' ? 'Increase' : 'Decrease'}
       style={[styles.stepBtn, { backgroundColor: colors.primarySoft, opacity: disabled ? 0.4 : 1 }]}
     >
       <Ionicons name={icon} size={22} color={colors.primary} />
@@ -173,8 +173,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 10,
     fontSize: 16,
-    textAlign: Platform.OS === 'web' ? 'right' : 'left',
-    writingDirection: 'rtl',
+    textAlign: 'left',
   },
   multiline: { minHeight: 96, textAlignVertical: 'top' },
   pickerBtn: { flexDirection: 'row', alignItems: 'center', gap: 10 },

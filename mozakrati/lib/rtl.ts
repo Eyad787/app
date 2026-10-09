@@ -1,7 +1,7 @@
-import { I18nManager, Platform } from 'react-native';
+import { I18nManager } from 'react-native';
 
-/** الويب دايماً RTL (الصفحة dir="rtl")، والموبايل حسب إعداد RTL في app.json */
-export const isRTL = Platform.OS === 'web' || I18nManager.isRTL;
+/** اتجاه الواجهة: التطبيق إنجليزي (LTR)، بس بنقرا الإعداد علشان لو اتغيّر بعدين */
+export const isRTL = I18nManager.isRTL;
 
 /** حالة الضغط + hover (الـ hover موجود على الويب بس) */
 export type PressState = import('react-native').PressableStateCallbackType & { hovered?: boolean };

@@ -61,9 +61,9 @@ export default function PomodoroScreen() {
 
   const doneMessage =
     p.lastCompleted === 'work'
-      ? `برافو! خلصت جلسة مذاكرة 🎉 دلوقتي ${PHASE_LABELS[state.phase]}.`
+      ? `Great job! Session done 🎉 Time for a ${PHASE_LABELS[state.phase].toLowerCase()}.`
       : p.lastCompleted
-        ? 'الراحة خلصت ⏰ يلا نرجع نذاكر.'
+        ? "Break's over ⏰ Let's get back to it."
         : null;
 
   const timer = (
@@ -73,7 +73,7 @@ export default function PomodoroScreen() {
           <AppText variant="label" center color={isBreak ? colors.success : colors.primary} style={styles.flex}>
             {doneMessage}
           </AppText>
-          <IconButton icon="close" label="إخفاء" size={18} onPress={p.dismissCompleted} background="transparent" />
+          <IconButton icon="close" label="Dismiss" size={18} onPress={p.dismissCompleted} background="transparent" />
         </View>
       ) : null}
       <View style={[styles.phasePill, { backgroundColor: isBreak ? colors.successSoft : colors.primarySoft }]}>
@@ -87,11 +87,11 @@ export default function PomodoroScreen() {
           {formatClock(p.remainingMs)}
         </AppText>
         <AppText variant="caption" muted center>
-          {state.status === 'paused' ? 'موقوف مؤقتاً' : running ? (isBreak ? 'استريّح شوية' : 'ركّز 💪') : 'جاهز'}
+          {state.status === 'paused' ? 'Paused' : running ? (isBreak ? 'Relax a bit' : 'Stay focused 💪') : 'Ready'}
         </AppText>
       </ProgressRing>
 
-      <View style={styles.dots} accessibilityLabel={`جلسة ${cyclePos + 1} من ${s.sessionsBeforeLongBreak}`}>
+      <View style={styles.dots} accessibilityLabel={`Session ${cyclePos + 1} of ${s.sessionsBeforeLongBreak}`}>
         {Array.from({ length: s.sessionsBeforeLongBreak }, (_, i) => (
           <View key={i} style={[styles.dot, { backgroundColor: i < filledDots ? ringColor : colors.cardAlt }]} />
         ))}
@@ -100,22 +100,22 @@ export default function PomodoroScreen() {
       <View style={styles.controls}>
         {idle ? (
           <Button
-            title={isBreak ? 'ابدأ الراحة' : 'ابدأ المذاكرة'}
+            title={isBreak ? 'Start break' : 'Start focus'}
             icon="play"
             onPress={p.start}
             color={isBreak ? colors.success : undefined}
             style={styles.mainBtn}
           />
         ) : running ? (
-          <Button title="إيقاف مؤقت" icon="pause" onPress={p.pause} style={styles.mainBtn} />
+          <Button title="Pause" icon="pause" onPress={p.pause} style={styles.mainBtn} />
         ) : (
-          <Button title="كمّل" icon="play" onPress={p.resume} style={styles.mainBtn} />
+          <Button title="Resume" icon="play" onPress={p.resume} style={styles.mainBtn} />
         )}
       </View>
       <View style={styles.controls}>
-        <Button title={isBreak ? 'تخطّى الراحة' : 'تخطّي'} icon="play-skip-forward" variant="secondary" small onPress={p.skip} />
+        <Button title={isBreak ? 'Skip break' : 'Skip'} icon="play-skip-forward" variant="secondary" small onPress={p.skip} />
         {!idle || state.completedWork > 0 ? (
-          <Button title="إنهاء" icon="stop" variant="danger" small onPress={p.finish} />
+          <Button title="Finish" icon="stop" variant="danger" small onPress={p.finish} />
         ) : null}
       </View>
     </Card>
@@ -123,33 +123,33 @@ export default function PomodoroScreen() {
 
   const side = (
     <>
-      <Section title="هتذاكر إيه؟">
+      <Section title="What are you studying?">
         {subjects.length === 0 ? (
           <Card>
             <AppText variant="caption" muted>
-              ضيف موادك علشان تعرف وقت مذاكرة كل مادة.
+              Add your subjects to track study time per subject.
             </AppText>
-            <Button title="أضف مادة" icon="add" small variant="secondary" onPress={() => router.push('/subject-form')} style={styles.topGap} />
+            <Button title="Add subject" icon="add" small variant="secondary" onPress={() => router.push('/subject-form')} style={styles.topGap} />
           </Card>
         ) : (
-          <SubjectPicker subjects={subjects} value={state.subjectId} onChange={p.setSubject} allowNone noneLabel="من غير مادة" />
+          <SubjectPicker subjects={subjects} value={state.subjectId} onChange={p.setSubject} allowNone noneLabel="No subject" />
         )}
         {!idle && state.phase === 'work' ? (
           <AppText variant="caption" muted>
-            لو غيّرت المادة دلوقتي، الجلسة الحالية هتتحسب للمادة الجديدة.
+            If you change the subject now, the current session will count toward the new one.
           </AppText>
         ) : null}
       </Section>
 
-      <Section title={`مذاكرة النهارده: ${formatDuration(studiedToday)}`}>
+      <Section title={`Today: ${formatDuration(studiedToday)}`}>
         {todaySessions.length === 0 ? (
           <AppText variant="caption" muted>
-            لسه مفيش جلسات النهارده. أول جلسة هي أصعب واحدة، ابدأ وانت هتتشجع 😉
+            No sessions yet today. The first one is the hardest. Just start 😉
           </AppText>
         ) : (
           todaySessions.map((x) => (
             <View key={x.id} style={[styles.sessionRow, { borderColor: colors.border }]}>
-              <SubjectTag subject={x.subjectId ? subjectMap.get(x.subjectId) : null} fallback="من غير مادة" />
+              <SubjectTag subject={x.subjectId ? subjectMap.get(x.subjectId) : null} fallback="No subject" />
               <AppText variant="caption" muted style={styles.flex}>
                 {formatTime(minutesToTime(minutesOfDay(new Date(x.startedAt))))}
               </AppText>
@@ -165,13 +165,13 @@ export default function PomodoroScreen() {
         <View style={styles.settingsRow}>
           <Ionicons name="options-outline" size={22} color={colors.primary} />
           <View style={styles.flex}>
-            <AppText variant="label">الأوقات</AppText>
+            <AppText variant="label">Durations</AppText>
             <AppText variant="caption" muted>
-              مذاكرة {s.workMinutes} د • راحة {s.shortBreakMinutes} د • راحة طويلة {s.longBreakMinutes} د كل {s.sessionsBeforeLongBreak} جلسات
+              Focus {s.workMinutes} min • break {s.shortBreakMinutes} min • long break {s.longBreakMinutes} min every {s.sessionsBeforeLongBreak} sessions
             </AppText>
           </View>
           <AppText variant="caption" bold color={colors.primary}>
-            تعديل
+            Edit
           </AppText>
         </View>
       </Card>
@@ -179,7 +179,7 @@ export default function PomodoroScreen() {
   );
 
   return (
-    <Screen title="مؤقت المذاكرة" subtitle="بومودورو: ذاكر بتركيز وخد راحات قصيرة">
+    <Screen title="Study timer" subtitle="Pomodoro: focus, then take short breaks">
       <Columns wide={isWide}>
         {timer}
         {side}

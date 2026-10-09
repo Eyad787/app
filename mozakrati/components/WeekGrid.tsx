@@ -29,14 +29,14 @@ export function WeekGrid({ days, classes, subjects, todayWeekday, nowMinutes, on
   const { from, to } = hourRange(classes);
   const hours = Array.from({ length: to - from }, (_, i) => from + i);
   const height = hours.length * HOUR_H;
-  const hourLabel = (h: number) => `${h % 12 === 0 ? 12 : h % 12} ${h < 12 ? 'ص' : 'م'}`;
+  const hourLabel = (h: number) => `${h % 12 === 0 ? 12 : h % 12} ${h < 12 ? 'AM' : 'PM'}`;
 
   return (
     <View style={[styles.wrap, { backgroundColor: colors.card, borderColor: colors.border }]}>
       <View style={[styles.headerRow, { borderBottomColor: colors.border }]}>
         <View style={{ width: GUTTER }} />
         {days.map((d) => (
-          <Pressable key={d} style={styles.dayHead} onPress={() => onPressDay(d)} accessibilityRole="button" accessibilityLabel={`أضف حصة يوم ${WEEKDAY_NAMES[d]}`}>
+          <Pressable key={d} style={styles.dayHead} onPress={() => onPressDay(d)} accessibilityRole="button" accessibilityLabel={`Add a class on ${WEEKDAY_NAMES[d]}`}>
             <View style={[styles.dayPill, d === todayWeekday && { backgroundColor: colors.primary }]}>
               <AppText variant="label" bold center color={d === todayWeekday ? colors.onPrimary : colors.text}>
                 {WEEKDAY_NAMES[d]}
@@ -92,7 +92,7 @@ export function WeekGrid({ days, classes, subjects, todayWeekday, nowMinutes, on
                     ]}
                   >
                     <AppText variant="tiny" bold color={color} numberOfLines={2}>
-                      {s?.name ?? 'مادة'}
+                      {s?.name ?? 'Subject'}
                     </AppText>
                     {h >= 44 ? (
                       <AppText variant="tiny" muted numberOfLines={1}>

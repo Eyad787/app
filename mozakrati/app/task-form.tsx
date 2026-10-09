@@ -43,7 +43,7 @@ export default function TaskForm() {
 
   const remove = async () => {
     if (!existing) return;
-    const ok = await confirmAsync({ title: 'حذف المهمة', message: 'متأكد إنك عايز تمسح المهمة دي؟', confirmText: 'احذف' });
+    const ok = await confirmAsync({ title: 'Delete task', message: 'Are you sure you want to delete this task?', confirmText: 'Delete' });
     if (!ok) return;
     deleteTask(existing.id);
     closeForm();
@@ -52,40 +52,40 @@ export default function TaskForm() {
   const priorityColor = { high: colors.danger, medium: colors.warning, low: colors.success };
 
   return (
-    <FormScreen title={existing ? 'تعديل المهمة' : 'مهمة جديدة'} onSave={save} onDelete={existing ? remove : undefined}>
-      <Field label="المهمة" error={touched && !title.trim() ? 'اكتب المهمة' : null}>
+    <FormScreen title={existing ? 'Edit task' : 'New task'} onSave={save} onDelete={existing ? remove : undefined}>
+      <Field label="Task" error={touched && !title.trim() ? 'Write the task' : null}>
         <TextField
           value={title}
           onChangeText={setTitle}
-          placeholder="مثلاً: حل شيت 3 فيزيا"
+          placeholder="e.g. Solve physics sheet 3"
           autoFocus={!existing}
           maxLength={200}
           returnKeyType="done"
           onSubmitEditing={save}
         />
       </Field>
-      <Field label="المادة">
-        <SubjectPicker subjects={subjects} value={subjectId} onChange={setSubjectId} allowNone noneLabel="عامة" />
+      <Field label="Subject">
+        <SubjectPicker subjects={subjects} value={subjectId} onChange={setSubjectId} allowNone noneLabel="General" />
       </Field>
-      <Field label="الأولوية">
+      <Field label="Priority">
         <View style={styles.wrap}>
           {PRIORITIES.map((p) => (
             <Chip key={p} label={PRIORITY_LABELS[p]} color={priorityColor[p]} selected={priority === p} onPress={() => setPriority(p)} />
           ))}
         </View>
       </Field>
-      <Field label="ميعاد التسليم" hint="اختياري">
+      <Field label="Due date" hint="Optional">
         <PickerButton
           icon="calendar-outline"
           value={due ? formatDayDate(due) : null}
-          placeholder="من غير ميعاد"
+          placeholder="No due date"
           onPress={() => setPicking(true)}
           onClear={() => setDue(null)}
         />
         <View style={styles.wrap}>
-          <Chip label="النهارده" selected={due === today} onPress={() => setDue(today)} />
-          <Chip label="بكرة" selected={due === addDays(today, 1)} onPress={() => setDue(addDays(today, 1))} />
-          <Chip label="من غير ميعاد" selected={due == null} onPress={() => setDue(null)} />
+          <Chip label="Today" selected={due === today} onPress={() => setDue(today)} />
+          <Chip label="Tomorrow" selected={due === addDays(today, 1)} onPress={() => setDue(addDays(today, 1))} />
+          <Chip label="No due date" selected={due == null} onPress={() => setDue(null)} />
         </View>
       </Field>
       <DatePickerModal visible={picking} value={due} today={today} onSelect={setDue} onClose={() => setPicking(false)} />

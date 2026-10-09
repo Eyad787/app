@@ -14,10 +14,10 @@ type Props = { visible: boolean; value: TimeHM | null; title?: string; onSelect:
 const HOURS = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 0, 1, 2, 3, 4, 5, 6];
 const MINUTES = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
 const pad = (n: number) => String(n).padStart(2, '0');
-const hourLabel = (h: number) => `${h % 12 === 0 ? 12 : h % 12} ${h < 12 ? 'ص' : 'م'}`;
+const hourLabel = (h: number) => `${h % 12 === 0 ? 12 : h % 12} ${h < 12 ? 'AM' : 'PM'}`;
 
 /** منتقي ساعة بسيط: اختار الساعة وبعدين الدقايق */
-export function TimePickerModal({ visible, value, title = 'اختار الساعة', onSelect, onClose }: Props) {
+export function TimePickerModal({ visible, value, title = 'Pick a time', onSelect, onClose }: Props) {
   const [hour, setHour] = useState(9);
   const [minute, setMinute] = useState(0);
 
@@ -35,7 +35,7 @@ export function TimePickerModal({ visible, value, title = 'اختار الساع
         {formatTime(result)}
       </AppText>
       <AppText variant="label" muted>
-        الساعة
+        Hour
       </AppText>
       <View style={styles.wrap}>
         {HOURS.map((h) => (
@@ -43,7 +43,7 @@ export function TimePickerModal({ visible, value, title = 'اختار الساع
         ))}
       </View>
       <AppText variant="label" muted>
-        الدقايق
+        Minutes
       </AppText>
       <View style={styles.wrap}>
         {MINUTES.map((m) => (
@@ -51,9 +51,9 @@ export function TimePickerModal({ visible, value, title = 'اختار الساع
         ))}
       </View>
       <View style={styles.row}>
-        <Button title="إلغاء" variant="ghost" onPress={onClose} style={styles.flex} />
+        <Button title="Cancel" variant="ghost" onPress={onClose} style={styles.flex} />
         <Button
-          title="تمام"
+          title="OK"
           onPress={() => {
             onSelect(result);
             onClose();

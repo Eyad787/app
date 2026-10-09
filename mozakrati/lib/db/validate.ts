@@ -96,7 +96,7 @@ export function parseSettings(v: unknown): Settings {
 export const parseTerms = (v: unknown): Term[] =>
   list(v, (t) =>
     typeof t.id === 'string' && t.id
-      ? { id: t.id, name: str(t.name, 'ترم'), createdAt: isoOr(t.createdAt), archivedAt: nullableStr(t.archivedAt) }
+      ? { id: t.id, name: str(t.name, 'Term'), createdAt: isoOr(t.createdAt), archivedAt: nullableStr(t.archivedAt) }
       : null,
   );
 
@@ -199,8 +199,8 @@ export function parsePomodoro(v: unknown, settings: Settings): PomodoroState {
 
 /** بيحوّل أي JSON لبيانات تطبيق سليمة (للاستيراد) */
 export function parseAppData(raw: unknown): AppData {
-  if (!isObj(raw)) throw new Error('الملف ده مش نسخة احتياطية من مذاكرتي');
-  if (!('subjects' in raw) && !('profile' in raw)) throw new Error('الملف ده مش نسخة احتياطية من مذاكرتي');
+  if (!isObj(raw)) throw new Error('This file is not a Mozakrati backup.');
+  if (!('subjects' in raw) && !('profile' in raw)) throw new Error('This file is not a Mozakrati backup.');
   const settings = parseSettings(raw.settings);
   let terms = parseTerms(raw.terms);
   if (terms.length === 0) terms = [defaultTerm()];

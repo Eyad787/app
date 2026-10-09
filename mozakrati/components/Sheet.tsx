@@ -10,7 +10,7 @@ export function Sheet({ visible, onClose, title, children }: { visible: boolean;
   const colors = useColors();
   return (
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-      <Pressable style={[styles.backdrop, { backgroundColor: colors.overlay }]} onPress={onClose} accessibilityLabel="إغلاق">
+      <Pressable style={[styles.backdrop, { backgroundColor: colors.overlay }]} onPress={onClose} accessibilityLabel="Close">
         <Pressable style={[styles.sheet, { backgroundColor: colors.card }]} onPress={() => {}}>
           <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
             {title ? (

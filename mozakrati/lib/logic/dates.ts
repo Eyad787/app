@@ -87,55 +87,49 @@ export function minutesOfDay(d: Date): number {
   return d.getHours() * 60 + d.getMinutes();
 }
 
-/** 13:30 → "1:30 م" */
+/** 13:30 → "1:30 PM" */
 export function formatTime(t: TimeHM): string {
   const [h, m] = t.split(':').map(Number);
-  const suffix = h < 12 ? 'ص' : 'م';
+  const suffix = h < 12 ? 'AM' : 'PM';
   const h12 = h % 12 === 0 ? 12 : h % 12;
   return `${h12}:${pad(m)} ${suffix}`;
 }
 
-/** "الخميس 9 أكتوبر" */
+/** "Friday, Oct 9" */
 export function formatDayDate(key: DateKey, withYear = false): string {
   const d = parseDateKey(key);
-  const base = `${WEEKDAY_NAMES[d.getDay() as Weekday]} ${d.getDate()} ${MONTH_NAMES[d.getMonth()]}`;
-  return withYear ? `${base} ${d.getFullYear()}` : base;
+  const base = `${WEEKDAY_NAMES[d.getDay() as Weekday]}, ${MONTH_NAMES[d.getMonth()]} ${d.getDate()}`;
+  return withYear ? `${base}, ${d.getFullYear()}` : base;
 }
 
-/** "9 أكتوبر" */
+/** "Oct 9" */
 export function formatShortDate(key: DateKey): string {
   const d = parseDateKey(key);
-  return `${d.getDate()} ${MONTH_NAMES[d.getMonth()]}`;
+  return `${MONTH_NAMES[d.getMonth()]} ${d.getDate()}`;
 }
 
-/** صيغة العدد بالعامية: 1 → مفرد، 2 → مثنى، 3-10 → جمع، 11+ → مفرد */
-export function countWord(n: number, one: string, two: string, few: string, many: string = one): string {
-  if (n === 1) return one;
-  if (n === 2) return two;
-  if (n >= 3 && n <= 10) return `${n} ${few}`;
-  return `${n} ${many}`;
+/** "1 day" / "3 days" */
+export function countWord(n: number, singular: string, plural = `${singular}s`): string {
+  return `${n} ${n === 1 ? singular : plural}`;
 }
 
-/** "ساعة و 20 دقيقة" */
+/** "1 hr 20 min" */
 export function formatDuration(minutes: number): string {
   const total = Math.max(0, Math.round(minutes));
   const h = Math.floor(total / 60);
   const m = total % 60;
-  const hText = h === 0 ? '' : countWord(h, 'ساعة', 'ساعتين', 'ساعات');
-  const mText = m === 0 ? '' : countWord(m, 'دقيقة', 'دقيقتين', 'دقايق');
-  if (!hText && !mText) return '0 دقيقة';
-  if (!hText) return mText;
-  if (!mText) return hText;
-  return `${hText} و ${mText}`;
+  if (h === 0) return `${m} min`;
+  if (m === 0) return `${h} hr`;
+  return `${h} hr ${m} min`;
 }
 
-/** "2:15 س" مختصرة للكروت والرسوم */
+/** "2:15 h" short form for cards and charts */
 export function formatHoursShort(minutes: number): string {
   const total = Math.max(0, Math.round(minutes));
   const h = Math.floor(total / 60);
   const m = total % 60;
-  if (h === 0) return `${m} د`;
-  return `${h}:${pad(m)} س`;
+  if (h === 0) return `${m}m`;
+  return `${h}:${pad(m)}h`;
 }
 
 /** 25:00 */
@@ -148,7 +142,7 @@ export function formatClock(ms: number): string {
 
 export function greeting(d: Date): string {
   const h = d.getHours();
-  if (h >= 4 && h < 12) return 'صباح الخير';
-  if (h >= 12 && h < 17) return 'نهارك سعيد';
-  return 'مساء الخير';
+  if (h >= 4 && h < 12) return 'Good morning';
+  if (h >= 12 && h < 17) return 'Good afternoon';
+  return 'Good evening';
 }

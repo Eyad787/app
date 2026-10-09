@@ -44,9 +44,9 @@ export function ClassCard({ item, subject, status, onPress }: Props) {
         <View style={styles.body}>
           <View style={styles.titleRow}>
             <AppText variant="label" bold numberOfLines={1} style={styles.flex}>
-              {subject?.name ?? 'مادة'}
+              {subject?.name ?? 'Subject'}
             </AppText>
-            {status === 'current' ? <Pill text="دلوقتي" color={color} /> : status === 'next' ? <Pill text="الجاية" color={color} /> : null}
+            {status === 'current' ? <Pill text="Now" color={color} /> : status === 'next' ? <Pill text="Next" color={color} /> : null}
           </View>
           <View style={styles.meta}>
             <AppText variant="caption" color={color} bold>
@@ -85,7 +85,7 @@ function Meta({ icon, text }: { icon: 'location-outline' | 'person-outline'; tex
 
 const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  time: { alignItems: 'center', minWidth: 64 },
+  time: { alignItems: 'center', minWidth: 76 },
   divider: { width: 1, alignSelf: 'stretch' },
   body: { flex: 1, gap: 4, minWidth: 0 },
   titleRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },

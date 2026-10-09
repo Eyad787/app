@@ -17,7 +17,7 @@ type Props = {
 };
 
 /** شاشة نموذج (إضافة/تعديل) بزرار حفظ ثابت تحت */
-export function FormScreen({ title, children, onSave, saveLabel = 'حفظ', canSave = true, onDelete }: Props) {
+export function FormScreen({ title, children, onSave, saveLabel = 'Save', canSave = true, onDelete }: Props) {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   return (
@@ -37,7 +37,7 @@ export function FormScreen({ title, children, onSave, saveLabel = 'حفظ', canS
         ]}
       >
         <View style={[styles.inner, styles.footerRow]}>
-          {onDelete ? <Button title="حذف" icon="trash-outline" variant="danger" onPress={onDelete} /> : null}
+          {onDelete ? <Button title="Delete" icon="trash-outline" variant="danger" onPress={onDelete} /> : null}
           <Button title={saveLabel} icon="checkmark" onPress={onSave} disabled={!canSave} style={styles.flex} />
         </View>
       </View>

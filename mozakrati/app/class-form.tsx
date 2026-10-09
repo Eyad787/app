@@ -42,12 +42,12 @@ export default function ClassForm() {
 
   if (subjects.length === 0) {
     return (
-      <FormScreen title="حصة جديدة" onSave={closeForm} canSave={false}>
+      <FormScreen title="New class" onSave={closeForm} canSave={false}>
         <EmptyState
           icon="book-outline"
-          title="ضيف مادة الأول"
-          message="كل حصة في الجدول لازم تبقى تبع مادة."
-          actionLabel="أضف مادة"
+          title="Add a subject first"
+          message="Every class in your schedule belongs to a subject."
+          actionLabel="Add subject"
           onAction={() => router.replace('/subject-form')}
         />
       </FormScreen>
@@ -68,7 +68,7 @@ export default function ClassForm() {
 
   const remove = async () => {
     if (!existing) return;
-    const ok = await confirmAsync({ title: 'حذف الحصة', message: 'متأكد إنك عايز تشيل الحصة دي من الجدول؟', confirmText: 'احذف' });
+    const ok = await confirmAsync({ title: 'Delete class', message: 'Remove this class from your schedule?', confirmText: 'Delete' });
     if (!ok) return;
     deleteClass(existing.id);
     closeForm();
@@ -81,18 +81,18 @@ export default function ClassForm() {
   };
 
   return (
-    <FormScreen title={existing ? 'تعديل الحصة' : 'حصة جديدة'} onSave={save} canSave={!!subjectId && rangeOk} onDelete={existing ? remove : undefined}>
-      <Field label="المادة">
+    <FormScreen title={existing ? 'Edit class' : 'New class'} onSave={save} canSave={!!subjectId && rangeOk} onDelete={existing ? remove : undefined}>
+      <Field label="Subject">
         <SubjectPicker subjects={subjects} value={subjectId} onChange={setSubjectId} />
       </Field>
-      <Field label="النوع">
+      <Field label="Type">
         <View style={styles.wrap}>
           {KINDS.map((k) => (
             <Chip key={k} label={CLASS_KIND_LABELS[k]} selected={kind === k} onPress={() => setKind(k)} />
           ))}
         </View>
       </Field>
-      <Field label="اليوم">
+      <Field label="Day">
         <View style={styles.wrap}>
           {WEEK_ORDER.map((d) => (
             <Chip key={d} label={WEEKDAY_NAMES[d]} selected={day === d} onPress={() => setDay(d)} />
@@ -101,34 +101,34 @@ export default function ClassForm() {
       </Field>
       <View style={styles.row}>
         <View style={styles.flex}>
-          <Field label="من">
+          <Field label="From">
             <PickerButton icon="time-outline" value={formatTime(start)} placeholder="" onPress={() => setPicking('start')} />
           </Field>
         </View>
         <View style={styles.flex}>
-          <Field label="لحد">
+          <Field label="To">
             <PickerButton icon="time-outline" value={formatTime(end)} placeholder="" onPress={() => setPicking('end')} />
           </Field>
         </View>
       </View>
       {!rangeOk ? (
         <AppText variant="caption" color={colors.danger}>
-          وقت النهاية لازم يبقى بعد وقت البداية.
+          End time must be after start time.
         </AppText>
       ) : conflicts.length > 0 ? (
         <AppText variant="caption" color={colors.warning}>
-          ⚠️ الميعاد ده متعارض مع: {conflicts.map((c) => `${subjectName(c.subjectId)} (${formatTime(c.start)})`).join('، ')}
+          ⚠️ This overlaps with: {conflicts.map((c) => `${subjectName(c.subjectId)} (${formatTime(c.start)})`).join(', ')}
         </AppText>
       ) : null}
-      <Field label="المكان" hint="اختياري – مثلاً: مدرج 3 أو معمل B">
-        <TextField value={location} onChangeText={setLocation} placeholder="المدرج / القاعة" maxLength={80} />
+      <Field label="Location" hint="Optional – e.g. Hall 3 or Lab B">
+        <TextField value={location} onChangeText={setLocation} placeholder="Hall / room" maxLength={80} />
       </Field>
-      <Field label={kind === 'lecture' ? 'الدكتور' : 'المعيد'} hint="اختياري">
-        <TextField value={instructor} onChangeText={setInstructor} placeholder="الاسم" maxLength={80} />
+      <Field label={kind === 'lecture' ? 'Professor' : 'Teaching assistant'} hint="Optional">
+        <TextField value={instructor} onChangeText={setInstructor} placeholder="Name" maxLength={80} />
       </Field>
       <TimePickerModal
         visible={picking != null}
-        title={picking === 'start' ? 'بتبدأ الساعة كام؟' : 'بتخلص الساعة كام؟'}
+        title={picking === 'start' ? 'Starts at' : 'Ends at'}
         value={picking === 'start' ? start : end}
         onClose={() => setPicking(null)}
         onSelect={(t) => (picking === 'start' ? setStartKeepLength(t) : setEnd(t))}

@@ -19,7 +19,7 @@ export function parseBackup(text: string): AppData {
   try {
     raw = JSON.parse(text);
   } catch {
-    throw new Error('الملف ده مش JSON سليم');
+    throw new Error('This file is not valid JSON.');
   }
   return parseAppData(raw);
 }

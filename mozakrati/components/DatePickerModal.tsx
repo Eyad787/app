@@ -1,8 +1,10 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useEffect, useMemo, useState } from 'react';
-import { I18nManager, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 
-import { MONTH_NAMES } from '@/constants/labels';
+import { isRTL } from '@/lib/rtl';
+
+import { MONTH_NAMES_LONG } from '@/constants/labels';
 import { useColors } from '@/hooks/useTheme';
 import { addDays, toDateKey } from '@/lib/logic/dates';
 import type { DateKey } from '@/lib/types';
@@ -15,8 +17,7 @@ import { Sheet } from './Sheet';
 type Props = { visible: boolean; value: DateKey | null; today: DateKey; onSelect: (d: DateKey) => void; onClose: () => void };
 
 // حروف الأيام بالترتيب من السبت
-const WEEKDAY_SHORT = ['س', 'ح', 'ن', 'ث', 'ر', 'خ', 'ج'];
-const isRtl = Platform.OS === 'web' || I18nManager.isRTL;
+const WEEKDAY_SHORT = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
 
 /** منتقي تاريخ مكتوب بـ JavaScript علشان يشتغل على Expo Go والويب ويدعم العربي */
 export function DatePickerModal({ visible, value, today, onSelect, onClose }: Props) {
@@ -53,14 +54,14 @@ export function DatePickerModal({ visible, value, today, onSelect, onClose }: Pr
   return (
     <Sheet visible={visible} onClose={onClose}>
       <View style={styles.header}>
-        <Pressable onPress={() => shift(-1)} accessibilityLabel="الشهر اللي فات" style={[styles.nav, { backgroundColor: colors.primarySoft }]}>
-          <Ionicons name={isRtl ? 'chevron-forward' : 'chevron-back'} size={22} color={colors.primary} />
+        <Pressable onPress={() => shift(-1)} accessibilityLabel="Previous month" style={[styles.nav, { backgroundColor: colors.primarySoft }]}>
+          <Ionicons name={isRTL ? 'chevron-forward' : 'chevron-back'} size={22} color={colors.primary} />
         </Pressable>
         <AppText variant="heading" center style={styles.flex}>
-          {MONTH_NAMES[month.m]} {month.y}
+          {MONTH_NAMES_LONG[month.m]} {month.y}
         </AppText>
-        <Pressable onPress={() => shift(1)} accessibilityLabel="الشهر الجاي" style={[styles.nav, { backgroundColor: colors.primarySoft }]}>
-          <Ionicons name={isRtl ? 'chevron-back' : 'chevron-forward'} size={22} color={colors.primary} />
+        <Pressable onPress={() => shift(1)} accessibilityLabel="Next month" style={[styles.nav, { backgroundColor: colors.primarySoft }]}>
+          <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={22} color={colors.primary} />
         </Pressable>
       </View>
       <View style={styles.grid}>
@@ -97,11 +98,11 @@ export function DatePickerModal({ visible, value, today, onSelect, onClose }: Pr
         })}
       </View>
       <View style={styles.quick}>
-        <Chip label="النهارده" selected={value === today} onPress={() => pick(today)} />
-        <Chip label="بكرة" selected={value === addDays(today, 1)} onPress={() => pick(addDays(today, 1))} />
-        <Chip label="بعد أسبوع" selected={value === addDays(today, 7)} onPress={() => pick(addDays(today, 7))} />
+        <Chip label="Today" selected={value === today} onPress={() => pick(today)} />
+        <Chip label="Tomorrow" selected={value === addDays(today, 1)} onPress={() => pick(addDays(today, 1))} />
+        <Chip label="In a week" selected={value === addDays(today, 7)} onPress={() => pick(addDays(today, 7))} />
       </View>
-      <Button title="إلغاء" variant="ghost" onPress={onClose} />
+      <Button title="Cancel" variant="ghost" onPress={onClose} />
     </Sheet>
   );
 }

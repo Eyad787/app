@@ -26,7 +26,7 @@ type Props = {
 };
 
 /** حاوية كل شاشة رئيسية: عنوان + مساحة آمنة + عرض أقصى على الشاشات الكبيرة */
-export function Screen({ title, subtitle, actions, onAdd, addLabel = 'إضافة', toolbar, children, scroll = true }: Props) {
+export function Screen({ title, subtitle, actions, onAdd, addLabel = 'Add', toolbar, children, scroll = true }: Props) {
   const insets = useSafeAreaInsets();
   const colors = useColors();
   const { isWide } = useResponsive();

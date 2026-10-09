@@ -26,12 +26,12 @@ test('محتاج أجيب كام علشان أوصل لمعدّل', () => {
 });
 
 test('التقديرات بالنسب', () => {
-  assert.equal(percentToGrade(92), 'امتياز');
-  assert.equal(percentToGrade(85), 'امتياز');
-  assert.equal(percentToGrade(80), 'جيد جداً');
-  assert.equal(percentToGrade(70), 'جيد');
-  assert.equal(percentToGrade(50), 'مقبول');
-  assert.equal(percentToGrade(40), 'ضعيف');
+  assert.equal(percentToGrade(92), 'Excellent');
+  assert.equal(percentToGrade(85), 'Excellent');
+  assert.equal(percentToGrade(80), 'Very good');
+  assert.equal(percentToGrade(70), 'Good');
+  assert.equal(percentToGrade(50), 'Pass');
+  assert.equal(percentToGrade(40), 'Weak');
   assert.equal(weightedPercent([{ creditHours: 3, percent: 90 }, { creditHours: 1, percent: 70 }]), 85);
 });
 

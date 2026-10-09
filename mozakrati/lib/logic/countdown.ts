@@ -18,14 +18,14 @@ export function urgencyOf(target: DateKey, today: DateKey): Urgency {
   return 'normal';
 }
 
-const daysWord = (n: number) => countWord(n, 'يوم', 'يومين', 'أيام', 'يوم');
+const daysWord = (n: number) => countWord(n, 'day');
 
-/** "النهارده" / "بكرة" / "فاضل 5 أيام" / "فات من 3 أيام" */
+/** "Today" / "Tomorrow" / "In 5 days" / "3 days ago" */
 export function countdownLabel(target: DateKey, today: DateKey): string {
   const d = daysLeft(target, today);
-  if (d === 0) return 'النهارده';
-  if (d === 1) return 'بكرة';
-  if (d === -1) return 'كان امبارح';
-  if (d < 0) return `فات من ${daysWord(-d)}`;
-  return `فاضل ${daysWord(d)}`;
+  if (d === 0) return 'Today';
+  if (d === 1) return 'Tomorrow';
+  if (d === -1) return 'Yesterday';
+  if (d < 0) return `${daysWord(-d)} ago`;
+  return `In ${daysWord(d)}`;
 }

@@ -8,7 +8,7 @@ import { EmptyState } from '@/components/EmptyState';
 import { Grid } from '@/components/Grid';
 import { Screen } from '@/components/Screen';
 import { withAlpha } from '@/constants/colors';
-import { WEEKDAY_NAMES } from '@/constants/labels';
+import { WEEKDAY_SHORT } from '@/constants/labels';
 import { useToday } from '@/hooks/useNow';
 import { useResponsive } from '@/hooks/useResponsive';
 import { useColors } from '@/hooks/useTheme';
@@ -29,24 +29,24 @@ export default function SubjectsScreen() {
 
   return (
     <Screen
-      title="المواد"
-      subtitle={subjects.length ? `${countWord(subjects.length, 'مادة واحدة', 'مادتين', 'مواد', 'مادة')} • ${totalHours} ساعة معتمدة` : undefined}
+      title="Subjects"
+      subtitle={subjects.length ? `${countWord(subjects.length, 'subject')} • ${countWord(totalHours, 'credit hour')}` : undefined}
       onAdd={() => router.push('/subject-form')}
-      addLabel="أضف مادة"
+      addLabel="Add subject"
     >
       {subjects.length === 0 ? (
         <EmptyState
           icon="library-outline"
-          title="لسه مفيش مواد"
-          message="ضيف المواد اللي واخدها الترم ده، وكل مادة هيبقى ليها لون خاص بيها في الجدول والامتحانات."
-          actionLabel="أضف أول مادة"
+          title="No subjects yet"
+          message="Add the subjects you're taking this term. Each one gets its own color in your schedule and exams."
+          actionLabel="Add your first subject"
           onAction={() => router.push('/subject-form')}
         />
       ) : (
         <Grid columns={Math.max(columns, 1)}>
           {subjects.map((s) => {
             const slots = data.classes.filter((c) => c.subjectId === s.id);
-            const days = [...new Set(slots.map((c) => WEEKDAY_NAMES[c.day]))];
+            const days = [...new Set(slots.map((c) => WEEKDAY_SHORT[c.day]))];
             const exam = upcoming.find((e) => e.subjectId === s.id);
             const pending = data.tasks.filter((t) => t.subjectId === s.id && !t.done).length;
             const studied = minutesForSubject(data.studySessions, s.id);
@@ -58,26 +58,26 @@ export default function SubjectsScreen() {
                   </AppText>
                   <View style={styles.hours}>
                     <AppText variant="tiny" color="#FFFFFF">
-                      {s.creditHours} س.م
+                      {s.creditHours} cr
                     </AppText>
                   </View>
                 </View>
                 <View style={styles.body}>
                   {s.instructor ? <Line icon="person-outline" text={s.instructor} /> : null}
-                  <Line icon="calendar-outline" text={days.length ? days.join('، ') : 'مش في الجدول لسه'} />
-                  <Line icon="time-outline" text={`ذاكرت ${formatDuration(studied)}`} />
+                  <Line icon="calendar-outline" text={days.length ? days.join(', ') : 'Not in your schedule yet'} />
+                  <Line icon="time-outline" text={`Studied ${formatDuration(studied)}`} />
                   <View style={styles.footer}>
                     {exam ? (
                       <View style={[styles.badge, { backgroundColor: withAlpha(s.color, 0.14) }]}>
                         <AppText variant="tiny" color={s.color}>
-                          امتحان {countdownLabel(exam.date, today).replace('فاضل ', 'بعد ')}
+                          Exam: {countdownLabel(exam.date, today)}
                         </AppText>
                       </View>
                     ) : null}
                     {pending > 0 ? (
                       <View style={[styles.badge, { backgroundColor: colors.cardAlt }]}>
                         <AppText variant="tiny" muted>
-                          {countWord(pending, 'مهمة', 'مهمتين', 'مهام', 'مهمة')}
+                          {countWord(pending, 'task')}
                         </AppText>
                       </View>
                     ) : null}

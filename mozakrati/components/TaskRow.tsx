@@ -46,13 +46,13 @@ export function TaskRow({ task, subject, today, onToggle, onPress }: Props) {
               <View style={styles.metaItem}>
                 <Ionicons name="calendar-outline" size={13} color={overdue ? colors.danger : colors.textMuted} />
                 <AppText variant="tiny" color={overdue ? colors.danger : colors.textMuted}>
-                  {overdue ? `متأخرة (${countdownLabel(task.due, today).replace('فات من ', '')})` : countdownLabel(task.due, today)}
+                  {overdue ? `Overdue (${countdownLabel(task.due, today).replace(' ago', '').replace('Yesterday', '1 day')})` : countdownLabel(task.due, today)}
                 </AppText>
               </View>
             ) : null}
           </View>
         </View>
-        <View style={[styles.priority, { backgroundColor: priorityColor }]} accessibilityLabel={`أولوية ${PRIORITY_LABELS[task.priority]}`} />
+        <View style={[styles.priority, { backgroundColor: priorityColor }]} accessibilityLabel={`${PRIORITY_LABELS[task.priority]} priority`} />
       </Pressable>
     </Animated.View>
   );

@@ -48,16 +48,16 @@ export function requiredGpa(current: { gpa: number; creditHours: number }, newCr
   return round2(Math.max(0, needed));
 }
 
-export type PercentGrade = 'امتياز' | 'جيد جداً' | 'جيد' | 'مقبول' | 'ضعيف' | 'ضعيف جداً';
+export type PercentGrade = 'Excellent' | 'Very good' | 'Good' | 'Pass' | 'Weak' | 'Very weak';
 
 /** التقدير حسب النسبة (النظام المصري المعتاد) */
 export function percentToGrade(percent: number): PercentGrade {
-  if (percent >= 85) return 'امتياز';
-  if (percent >= 75) return 'جيد جداً';
-  if (percent >= 65) return 'جيد';
-  if (percent >= 50) return 'مقبول';
-  if (percent >= 30) return 'ضعيف';
-  return 'ضعيف جداً';
+  if (percent >= 85) return 'Excellent';
+  if (percent >= 75) return 'Very good';
+  if (percent >= 65) return 'Good';
+  if (percent >= 50) return 'Pass';
+  if (percent >= 30) return 'Weak';
+  return 'Very weak';
 }
 
 /** النسبة المئوية المرجّحة بالساعات */

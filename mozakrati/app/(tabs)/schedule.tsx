@@ -13,7 +13,7 @@ import { useNow } from '@/hooks/useNow';
 import { useResponsive } from '@/hooks/useResponsive';
 import { useColors } from '@/hooks/useTheme';
 import { useData, useSubjectMap, useSubjects } from '@/lib/db/DataProvider';
-import { minutesOfDay, timeToMinutes } from '@/lib/logic/dates';
+import { countWord, minutesOfDay, timeToMinutes } from '@/lib/logic/dates';
 import { classesForDay, currentAndNext } from '@/lib/logic/schedule';
 import { isRTL } from '@/lib/rtl';
 import type { ClassSession, Weekday } from '@/lib/types';
@@ -65,12 +65,12 @@ export default function ScheduleScreen() {
 
   if (subjects.length === 0) {
     return (
-      <Screen title="الجدول الدراسي">
+      <Screen title="Schedule">
         <EmptyState
           icon="book-outline"
-          title="ضيف موادك الأول"
-          message="علشان تعمل جدولك، محتاج تضيف المواد اللي واخدها الترم ده."
-          actionLabel="أضف مادة"
+          title="Add your subjects first"
+          message="To build your schedule, first add the subjects you're taking this term."
+          actionLabel="Add subject"
           onAction={() => router.push('/subject-form')}
         />
       </Screen>
@@ -79,13 +79,13 @@ export default function ScheduleScreen() {
 
   if (isWide) {
     return (
-      <Screen title="الجدول الدراسي" subtitle="دوس على أي يوم علشان تضيف فيه حصة" onAdd={() => addClass(todayWd)} addLabel="أضف حصة">
+      <Screen title="Schedule" subtitle="Click a day to add a class to it" onAdd={() => addClass(todayWd)} addLabel="Add class">
         {classes.length === 0 ? (
           <EmptyState
             icon="calendar-outline"
-            title="جدولك لسه فاضي"
-            message="ضيف المحاضرات والسكاشن والمعامل بمواعيدها وأماكنها."
-            actionLabel="أضف أول حصة"
+            title="Your schedule is empty"
+            message="Add your lectures, sections and labs with their times and locations."
+            actionLabel="Add your first class"
             onAction={() => addClass(days.includes(todayWd) ? todayWd : days[0])}
           />
         ) : (
@@ -109,10 +109,10 @@ export default function ScheduleScreen() {
 
   return (
     <Screen
-      title="الجدول الدراسي"
-      subtitle="اسحب يمين أو شمال علشان تغيّر اليوم"
+      title="Schedule"
+      subtitle="Swipe left or right to change the day"
       onAdd={() => addClass()}
-      addLabel="أضف حصة"
+      addLabel="Add class"
       scroll={false}
       toolbar={
         <View style={styles.days}>
@@ -151,9 +151,9 @@ export default function ScheduleScreen() {
               <EmptyState
                 compact
                 icon="cafe-outline"
-                title={`مفيش حصص يوم ${WEEKDAY_NAMES[day]}`}
-                message={classes.length === 0 ? 'ابدأ بإضافة أول محاضرة أو سكشن.' : 'يوم أجازة؟ ولا ناقص حاجة؟'}
-                actionLabel="أضف حصة"
+                title={`No classes on ${WEEKDAY_NAMES[day]}`}
+                message={classes.length === 0 ? 'Start by adding your first lecture or section.' : 'A day off? Or something missing?'}
+                actionLabel="Add class"
                 onAction={() => addClass()}
               />
             </Card>
@@ -178,7 +178,7 @@ export default function ScheduleScreen() {
           )}
           <View style={[styles.hint, { borderColor: colors.border }]}>
             <AppText variant="caption" muted center>
-              {days.length} أيام دراسة • {classes.length} حصة في الأسبوع
+              {countWord(days.length, 'study day')} • {countWord(classes.length, 'class', 'classes')} a week
             </AppText>
           </View>
         </ScrollView>

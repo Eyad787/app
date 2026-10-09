@@ -14,22 +14,21 @@ import { useTaskToggle } from '@/hooks/useTaskToggle';
 import { useColors } from '@/hooks/useTheme';
 import { useData, useSubjectMap, useSubjects } from '@/lib/db/DataProvider';
 import { filterTasks, type TaskFilter } from '@/lib/logic/tasks';
-import { isRTL } from '@/lib/rtl';
 
 const FILTERS: { value: TaskFilter; label: string }[] = [
-  { value: 'all', label: 'كل المهام' },
-  { value: 'today', label: 'النهارده' },
-  { value: 'week', label: 'الأسبوع ده' },
-  { value: 'subject', label: 'حسب المادة' },
-  { value: 'done', label: 'المكتملة' },
+  { value: 'all', label: 'All' },
+  { value: 'today', label: 'Today' },
+  { value: 'week', label: 'This week' },
+  { value: 'subject', label: 'By subject' },
+  { value: 'done', label: 'Completed' },
 ];
 
 const EMPTY: Record<TaskFilter, { title: string; message: string }> = {
-  all: { title: 'مفيش مهام', message: 'اكتب أي حاجة محتاج تعملها: شيت، تلخيص، مراجعة... وعلّم عليها لما تخلص.' },
-  today: { title: 'مفيش مهام النهارده 🎉', message: 'مفيش حاجة تسليمها النهارده أو متأخرة.' },
-  week: { title: 'الأسبوع ده فاضي', message: 'مفيش مهام ميعادها الأسبوع ده.' },
-  subject: { title: 'مفيش مهام للمادة دي', message: 'ضيف مهمة واربطها بالمادة.' },
-  done: { title: 'لسه ماخلصتش مهام', message: 'المهام اللي هتخلصها هتظهر هنا.' },
+  all: { title: 'No tasks', message: 'Write down anything you need to do: a sheet, a summary, a review... and check it off when done.' },
+  today: { title: 'Nothing due today 🎉', message: 'No tasks due today or overdue.' },
+  week: { title: 'This week is clear', message: 'No tasks due this week.' },
+  subject: { title: 'No tasks for this subject', message: 'Add a task and link it to this subject.' },
+  done: { title: 'No completed tasks yet', message: 'Tasks you finish will show up here.' },
 };
 
 export default function TasksScreen() {
@@ -63,10 +62,10 @@ export default function TasksScreen() {
 
   return (
     <Screen
-      title="المهام"
-      subtitle={pendingCount ? `${pendingCount} لسه ماخلصتش` : undefined}
+      title="Tasks"
+      subtitle={pendingCount ? `${pendingCount} to do` : undefined}
       onAdd={() => router.push({ pathname: '/task-form', params: newTaskParams })}
-      addLabel="أضف مهمة"
+      addLabel="Add task"
       toolbar={
         <View style={styles.toolbar}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
@@ -87,14 +86,14 @@ export default function TasksScreen() {
                 value={quick}
                 onChangeText={setQuick}
                 onSubmitEditing={quickAdd}
-                placeholder="إضافة سريعة: اكتب المهمة ودوس Enter"
+                placeholder="Quick add: type a task and press Enter"
                 placeholderTextColor={colors.textMuted}
                 returnKeyType="done"
                 blurOnSubmit={false}
-                style={[styles.quickInput, { color: colors.text, textAlign: isRTL ? 'right' : 'left' }]}
+                style={[styles.quickInput, { color: colors.text }]}
                 maxLength={200}
               />
-              <Pressable onPress={quickAdd} disabled={!quick.trim()} accessibilityLabel="أضف" hitSlop={8}>
+              <Pressable onPress={quickAdd} disabled={!quick.trim()} accessibilityLabel="Add" hitSlop={8}>
                 <Ionicons name="add-circle" size={30} color={quick.trim() ? colors.primary : colors.border} />
               </Pressable>
             </View>
@@ -103,13 +102,13 @@ export default function TasksScreen() {
       }
     >
       {filter === 'subject' && subjects.length === 0 ? (
-        <EmptyState icon="book-outline" title="لسه مفيش مواد" actionLabel="أضف مادة" onAction={() => router.push('/subject-form')} />
+        <EmptyState icon="book-outline" title="No subjects yet" actionLabel="Add subject" onAction={() => router.push('/subject-form')} />
       ) : list.length === 0 ? (
         <EmptyState
           icon={filter === 'done' ? 'trophy-outline' : 'checkbox-outline'}
           title={EMPTY[filter].title}
           message={EMPTY[filter].message}
-          actionLabel={filter === 'done' ? undefined : 'أضف مهمة'}
+          actionLabel={filter === 'done' ? undefined : 'Add task'}
           onAction={() => router.push({ pathname: '/task-form', params: newTaskParams })}
         />
       ) : (

@@ -19,7 +19,6 @@ export default function TabsLayout() {
       tabBar={(props) => <TabBar {...props} wide={isWide} />}
       screenOptions={{
         headerShown: false,
-        // 'left' في وضع RTL بيظهر على اليمين
         tabBarPosition: isWide ? 'left' : 'bottom',
         sceneStyle: { backgroundColor: colors.background },
         animation: 'fade',

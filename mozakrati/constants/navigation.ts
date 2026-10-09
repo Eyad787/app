@@ -10,11 +10,11 @@ export type TabItem = { name: TabRoute; title: string; icon: IconName; activeIco
  * وعلى اللاب توب كلهم بيظهروا في القائمة الجانبية.
  */
 export const TABS: TabItem[] = [
-  { name: 'index', title: 'الرئيسية', icon: 'home-outline', activeIcon: 'home', mobile: true },
-  { name: 'schedule', title: 'الجدول', icon: 'calendar-outline', activeIcon: 'calendar', mobile: true },
-  { name: 'subjects', title: 'المواد', icon: 'book-outline', activeIcon: 'book', mobile: true },
-  { name: 'exams', title: 'الامتحانات', icon: 'document-text-outline', activeIcon: 'document-text', mobile: true },
-  { name: 'tasks', title: 'المهام', icon: 'checkbox-outline', activeIcon: 'checkbox', mobile: true },
-  { name: 'pomodoro', title: 'مؤقت المذاكرة', icon: 'timer-outline', activeIcon: 'timer', mobile: false },
-  { name: 'settings', title: 'الإعدادات', icon: 'settings-outline', activeIcon: 'settings', mobile: false },
+  { name: 'index', title: 'Home', icon: 'home-outline', activeIcon: 'home', mobile: true },
+  { name: 'schedule', title: 'Schedule', icon: 'calendar-outline', activeIcon: 'calendar', mobile: true },
+  { name: 'subjects', title: 'Subjects', icon: 'book-outline', activeIcon: 'book', mobile: true },
+  { name: 'exams', title: 'Exams', icon: 'document-text-outline', activeIcon: 'document-text', mobile: true },
+  { name: 'tasks', title: 'Tasks', icon: 'checkbox-outline', activeIcon: 'checkbox', mobile: true },
+  { name: 'pomodoro', title: 'Study timer', icon: 'timer-outline', activeIcon: 'timer', mobile: false },
+  { name: 'settings', title: 'Settings', icon: 'settings-outline', activeIcon: 'settings', mobile: false },
 ];

@@ -53,7 +53,7 @@ export default function Onboarding() {
         </View>
         <Pressable onPress={finish} hitSlop={10} accessibilityRole="button">
           <AppText variant="caption" bold color={colors.textMuted}>
-            تخطّي وكمّل بعدين
+            Skip for now
           </AppText>
         </Pressable>
       </View>
@@ -66,29 +66,29 @@ export default function Onboarding() {
                 <Ionicons name="school" size={56} color={colors.onPrimary} />
               </View>
               <AppText variant="display" center>
-                أهلاً بيك في {APP_NAME} 👋
+                Welcome to {APP_NAME} 👋
               </AppText>
               <AppText muted center>
-                هنظّم مع بعض محاضراتك وامتحاناتك ومهامك، ونذاكر بمؤقت بومودورو. كل بياناتك بتفضل على جهازك.
+                Let's organize your lectures, exams and tasks, and study with a Pomodoro timer. All your data stays on your device.
               </AppText>
-              <Field label="اسمك إيه؟">
-                <TextField value={p.name} onChangeText={(name) => updateProfile({ name })} placeholder="اكتب اسمك" maxLength={60} returnKeyType="next" onSubmitEditing={next} />
+              <Field label="What's your name?">
+                <TextField value={p.name} onChangeText={(name) => updateProfile({ name })} placeholder="Your name" maxLength={60} returnKeyType="next" onSubmitEditing={next} />
               </Field>
             </>
           ) : step === 1 ? (
             <>
-              <AppText variant="title">بتدرس فين؟ 🎓</AppText>
-              <Field label="الكلية / الجامعة">
-                <TextField value={p.faculty} onChangeText={(faculty) => updateProfile({ faculty })} placeholder="مثلاً: تجارة عين شمس" maxLength={80} />
+              <AppText variant="title">Where do you study? 🎓</AppText>
+              <Field label="Faculty / university">
+                <TextField value={p.faculty} onChangeText={(faculty) => updateProfile({ faculty })} placeholder="e.g. Faculty of Commerce, Ain Shams" maxLength={80} />
               </Field>
-              <Field label="الفرقة">
+              <Field label="Year">
                 <View style={styles.wrap}>
                   {YEAR_OPTIONS.map((y) => (
                     <Chip key={y} label={y} selected={p.year === y} onPress={() => updateProfile({ year: y })} />
                   ))}
                 </View>
               </Field>
-              <Field label="الترم الحالي">
+              <Field label="Current term">
                 <View style={styles.wrap}>
                   {TERM_OPTIONS.map((t) => (
                     <Chip key={t} label={t} selected={p.term === t} onPress={() => updateProfile({ term: t })} />
@@ -98,8 +98,8 @@ export default function Onboarding() {
             </>
           ) : step === 2 ? (
             <>
-              <AppText variant="title">نظام التقدير عندكم إيه؟</AppText>
-              <AppText muted>ده هيفرق في حاسبة المعدّل. تقدر تغيّره بعدين من الإعدادات.</AppText>
+              <AppText variant="title">What grading system do you use?</AppText>
+              <AppText muted>This is used by the GPA calculator. You can change it later in Settings.</AppText>
               {(Object.keys(GRADING_LABELS) as GradingSystem[]).map((g) => {
                 const active = p.gradingSystem === g;
                 return (
@@ -119,13 +119,13 @@ export default function Onboarding() {
             </>
           ) : (
             <>
-              <AppText variant="title">ضيف موادك بسرعة 📚</AppText>
-              <AppText muted>اسم المادة وعدد ساعاتها ولونها. التفاصيل التانية تقدر تكمّلها بعدين.</AppText>
+              <AppText variant="title">Quickly add your subjects 📚</AppText>
+              <AppText muted>Name, credit hours and a color. You can fill in the rest later.</AppText>
               <Card style={styles.gap}>
-                <TextField value={subjectName} onChangeText={setSubjectName} placeholder="اسم المادة" maxLength={80} returnKeyType="done" onSubmitEditing={addQuickSubject} />
-                <Stepper value={hours} onChange={setHours} min={0} max={12} suffix="ساعات معتمدة" />
+                <TextField value={subjectName} onChangeText={setSubjectName} placeholder="Subject name" maxLength={80} returnKeyType="done" onSubmitEditing={addQuickSubject} />
+                <Stepper value={hours} onChange={setHours} min={0} max={12} suffix="credit hrs" />
                 <ColorPicker value={color} onChange={setColor} />
-                <Button title="أضف المادة" icon="add" variant="secondary" onPress={addQuickSubject} disabled={!subjectName.trim()} />
+                <Button title="Add subject" icon="add" variant="secondary" onPress={addQuickSubject} disabled={!subjectName.trim()} />
               </Card>
               {subjects.map((s) => (
                 <View key={s.id} style={[styles.subjectRow, { backgroundColor: s.color }]}>
@@ -133,9 +133,9 @@ export default function Onboarding() {
                     {s.name}
                   </AppText>
                   <AppText variant="caption" color="#FFFFFF">
-                    {s.creditHours} س.م
+                    {s.creditHours} cr
                   </AppText>
-                  <Pressable onPress={() => deleteSubject(s.id)} hitSlop={10} accessibilityLabel={`شيل ${s.name}`}>
+                  <Pressable onPress={() => deleteSubject(s.id)} hitSlop={10} accessibilityLabel={`Remove ${s.name}`}>
                     <Ionicons name="close-circle" size={22} color="#FFFFFF" />
                   </Pressable>
                 </View>
@@ -147,9 +147,9 @@ export default function Onboarding() {
 
       <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, 16), borderTopColor: colors.border }]}>
         <View style={[styles.inner, styles.row]}>
-          {step > 0 ? <Button title="رجوع" variant="ghost" onPress={() => setStep(step - 1)} /> : null}
+          {step > 0 ? <Button title="Back" variant="ghost" onPress={() => setStep(step - 1)} /> : null}
           <Button
-            title={step === STEPS - 1 ? 'يلا بينا 🚀' : step === 0 && !p.name.trim() ? 'كمّل من غير اسم' : 'التالي'}
+            title={step === STEPS - 1 ? "Let's go 🚀" : step === 0 && !p.name.trim() ? 'Continue without a name' : 'Next'}
             onPress={next}
             style={styles.flex}
           />

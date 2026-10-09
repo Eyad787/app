@@ -7,7 +7,7 @@ import type { Subject } from '@/lib/types';
 import { AppText } from './AppText';
 
 /** اسم المادة بلونها (أو "عامة") */
-export function SubjectTag({ subject, fallback = 'عامة' }: { subject: Subject | null | undefined; fallback?: string }) {
+export function SubjectTag({ subject, fallback = 'General' }: { subject: Subject | null | undefined; fallback?: string }) {
   const colors = useColors();
   const color = subject?.color ?? colors.textMuted;
   return (

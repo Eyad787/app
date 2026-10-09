@@ -44,45 +44,45 @@ export default function ExamForm() {
 
   const remove = async () => {
     if (!existing) return;
-    const ok = await confirmAsync({ title: 'حذف', message: 'متأكد إنك عايز تمسح الميعاد ده؟', confirmText: 'احذف' });
+    const ok = await confirmAsync({ title: 'Delete', message: 'Are you sure you want to delete this?', confirmText: 'Delete' });
     if (!ok) return;
     deleteExam(existing.id);
     closeForm();
   };
 
   return (
-    <FormScreen title={existing ? 'تعديل' : 'امتحان أو تسليم جديد'} onSave={save} onDelete={existing ? remove : undefined}>
-      <Field label="النوع">
+    <FormScreen title={existing ? 'Edit' : 'New exam or deadline'} onSave={save} onDelete={existing ? remove : undefined}>
+      <Field label="Type">
         <View style={styles.wrap}>
           {KINDS.map((k) => (
             <Chip key={k} label={EXAM_KIND_LABELS[k]} selected={kind === k} onPress={() => setKind(k)} />
           ))}
         </View>
       </Field>
-      <Field label="المادة">
-        <SubjectPicker subjects={subjects} value={subjectId} onChange={setSubjectId} allowNone noneLabel="من غير مادة" />
+      <Field label="Subject">
+        <SubjectPicker subjects={subjects} value={subjectId} onChange={setSubjectId} allowNone noneLabel="No subject" />
       </Field>
       <View style={styles.row}>
         <View style={styles.flex}>
-          <Field label={submission ? 'آخر ميعاد للتسليم' : 'التاريخ'}>
+          <Field label={submission ? 'Due date' : 'Date'}>
             <PickerButton icon="calendar-outline" value={formatDayDate(date, true)} placeholder="" onPress={() => setPicker('date')} />
           </Field>
         </View>
       </View>
-      <Field label="الساعة" hint="اختياري">
+      <Field label="Time" hint="Optional">
         <PickerButton
           icon="time-outline"
           value={time ? formatTime(time) : null}
-          placeholder="حدد الساعة"
+          placeholder="Set a time"
           onPress={() => setPicker('time')}
           onClear={() => setTime(null)}
         />
       </Field>
-      <Field label={submission ? 'هيتسلم فين؟' : 'المكان'} hint="اختياري">
-        <TextField value={location} onChangeText={setLocation} placeholder={submission ? 'مثلاً: على الـ LMS أو للمعيد' : 'مثلاً: مدرج 5'} maxLength={80} />
+      <Field label={submission ? 'Submit where?' : 'Location'} hint="Optional">
+        <TextField value={location} onChangeText={setLocation} placeholder={submission ? 'e.g. On the LMS or to the TA' : 'e.g. Hall 5'} maxLength={80} />
       </Field>
-      <Field label="ملاحظات" hint="مثلاً: المنهج المطلوب، أو المطلوب في التسليم">
-        <TextField value={notes} onChangeText={setNotes} placeholder="من أول المحاضرة 1 لحد 5..." multiline maxLength={2000} />
+      <Field label="Notes" hint="e.g. what's included, or what to submit">
+        <TextField value={notes} onChangeText={setNotes} placeholder="Lectures 1 to 5..." multiline maxLength={2000} />
       </Field>
       <DatePickerModal visible={picker === 'date'} value={date} today={today} onSelect={setDate} onClose={() => setPicker(null)} />
       <TimePickerModal visible={picker === 'time'} value={time} onSelect={setTime} onClose={() => setPicker(null)} />

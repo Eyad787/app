@@ -1,81 +1,83 @@
 import type { ClassKind, ExamKind, GradingSystem, PomodoroPhase, Priority, Weekday } from '@/lib/types';
 
-export const APP_NAME = 'مذاكرتي';
+export const APP_NAME = 'Mozakrati';
 
 /** ترتيب أيام الدراسة: السبت لحد الخميس، والجمعة في الآخر */
 export const WEEK_ORDER: Weekday[] = [6, 0, 1, 2, 3, 4, 5];
 
 export const WEEKDAY_NAMES: Record<Weekday, string> = {
-  0: 'الأحد',
-  1: 'الاتنين',
-  2: 'التلات',
-  3: 'الأربع',
-  4: 'الخميس',
-  5: 'الجمعة',
-  6: 'السبت',
+  0: 'Sunday',
+  1: 'Monday',
+  2: 'Tuesday',
+  3: 'Wednesday',
+  4: 'Thursday',
+  5: 'Friday',
+  6: 'Saturday',
 };
 
-export const MONTH_NAMES = [
-  'يناير',
-  'فبراير',
-  'مارس',
-  'أبريل',
-  'مايو',
-  'يونيو',
-  'يوليو',
-  'أغسطس',
-  'سبتمبر',
-  'أكتوبر',
-  'نوفمبر',
-  'ديسمبر',
+export const WEEKDAY_SHORT: Record<Weekday, string> = {
+  0: 'Sun',
+  1: 'Mon',
+  2: 'Tue',
+  3: 'Wed',
+  4: 'Thu',
+  5: 'Fri',
+  6: 'Sat',
+};
+
+export const MONTH_NAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+export const MONTH_NAMES_LONG = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 
 export const CLASS_KIND_LABELS: Record<ClassKind, string> = {
-  lecture: 'محاضرة',
-  section: 'سكشن',
-  lab: 'معمل',
+  lecture: 'Lecture',
+  section: 'Section',
+  lab: 'Lab',
 };
 
 export const EXAM_KIND_LABELS: Record<ExamKind, string> = {
-  midterm: 'ميدترم',
-  final: 'فاينل',
-  quiz: 'كويز',
-  practical: 'عملي',
-  oral: 'شفوي',
+  midterm: 'Midterm',
+  final: 'Final',
+  quiz: 'Quiz',
+  practical: 'Practical',
+  oral: 'Oral',
   assignment: 'Assignment',
-  project: 'مشروع',
+  project: 'Project',
 };
 
 /** الأنواع اللي بتعتبر "تسليم" وليها علامة خلصت */
 export const SUBMISSION_KINDS: ExamKind[] = ['assignment', 'project'];
 
 export const PRIORITY_LABELS: Record<Priority, string> = {
-  high: 'عالية',
-  medium: 'متوسطة',
-  low: 'منخفضة',
+  high: 'High',
+  medium: 'Medium',
+  low: 'Low',
 };
 
 export const PHASE_LABELS: Record<PomodoroPhase, string> = {
-  work: 'وقت المذاكرة',
-  shortBreak: 'راحة قصيرة',
-  longBreak: 'راحة طويلة',
+  work: 'Focus time',
+  shortBreak: 'Short break',
+  longBreak: 'Long break',
 };
 
 export const GRADING_LABELS: Record<GradingSystem, { title: string; hint: string }> = {
-  gpa4: { title: 'GPA من 4', hint: 'ساعات معتمدة ومعدّل تراكمي (A, B+, ...)' },
-  percent: { title: 'نسب وتقديرات', hint: 'امتياز، جيد جداً، جيد، مقبول' },
+  gpa4: { title: 'GPA (out of 4)', hint: 'Credit hours and cumulative GPA (A, B+, ...)' },
+  percent: { title: 'Percentages & grades', hint: 'Excellent, Very good, Good, Pass' },
 };
 
-export const YEAR_OPTIONS = ['إعدادي', 'الفرقة الأولى', 'الفرقة التانية', 'الفرقة التالتة', 'الفرقة الرابعة', 'الفرقة الخامسة', 'امتياز / دراسات عليا'];
+export const YEAR_OPTIONS = ['Prep year', 'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Internship / Postgrad'];
 
-export const TERM_OPTIONS = ['الترم الأول', 'الترم التاني', 'الترم الصيفي'];
-
-export const WEEKDAY_SHORT: Record<Weekday, string> = {
-  0: 'أحد',
-  1: 'اتنين',
-  2: 'تلات',
-  3: 'أربع',
-  4: 'خميس',
-  5: 'جمعة',
-  6: 'سبت',
-};
+export const TERM_OPTIONS = ['Fall term', 'Spring term', 'Summer term'];

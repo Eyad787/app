@@ -12,10 +12,10 @@ export async function exportBackup(data: AppData): Promise<void> {
   if (file.exists) file.delete();
   file.create();
   file.write(serializeBackup(data));
-  if (!(await Sharing.isAvailableAsync())) throw new Error('المشاركة مش متاحة على الجهاز ده');
+  if (!(await Sharing.isAvailableAsync())) throw new Error('Sharing is not available on this device.');
   await Sharing.shareAsync(file.uri, {
     mimeType: 'application/json',
-    dialogTitle: 'احفظ النسخة الاحتياطية',
+    dialogTitle: 'Save backup',
     UTI: 'public.json',
   });
 }

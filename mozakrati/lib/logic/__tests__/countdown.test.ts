@@ -13,13 +13,13 @@ test('daysLeft', () => {
 });
 
 test('countdownLabel', () => {
-  assert.equal(countdownLabel('2026-10-09', today), 'النهارده');
-  assert.equal(countdownLabel('2026-10-10', today), 'بكرة');
-  assert.equal(countdownLabel('2026-10-11', today), 'فاضل يومين');
-  assert.equal(countdownLabel('2026-10-14', today), 'فاضل 5 أيام');
-  assert.equal(countdownLabel('2026-10-29', today), 'فاضل 20 يوم');
-  assert.equal(countdownLabel('2026-10-08', today), 'كان امبارح');
-  assert.equal(countdownLabel('2026-10-06', today), 'فات من 3 أيام');
+  assert.equal(countdownLabel('2026-10-09', today), 'Today');
+  assert.equal(countdownLabel('2026-10-10', today), 'Tomorrow');
+  assert.equal(countdownLabel('2026-10-11', today), 'In 2 days');
+  assert.equal(countdownLabel('2026-10-14', today), 'In 5 days');
+  assert.equal(countdownLabel('2026-10-29', today), 'In 20 days');
+  assert.equal(countdownLabel('2026-10-08', today), 'Yesterday');
+  assert.equal(countdownLabel('2026-10-06', today), '3 days ago');
 });
 
 test('أحمر لو فاضل أقل من 3 أيام', () => {
