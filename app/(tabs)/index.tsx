@@ -150,7 +150,8 @@ export default function HomeScreen() {
           </View>
         )}
       </ScrollView>
-      <Fab onPress={openNew} />
+      {/* في الشاشة الفاضية فيه زرار إضافة جوه الكارت، فمش محتاجين الزرار العايم */}
+      {expenses.length > 0 ? <Fab onPress={openNew} /> : null}
     </Screen>
   );
 }
