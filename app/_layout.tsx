@@ -1,19 +1,13 @@
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ExpensesProvider } from '@/lib/ExpensesContext';
-import { ensureRTL } from '@/lib/rtl';
 import { useIsDark, useThemeColors } from '@/lib/theme';
 
 export default function RootLayout() {
   const isDark = useIsDark();
   const colors = useThemeColors();
-
-  useEffect(() => {
-    ensureRTL().catch(() => {});
-  }, []);
 
   const baseTheme = isDark ? DarkTheme : DefaultTheme;
   const navTheme = {
