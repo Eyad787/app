@@ -4,8 +4,13 @@
  * - باقي الملفات (JS، الخطوط، الصور): من الكاش الأول، ولو مش موجودة بتتجاب وتتحفظ.
  * غيّر رقم النسخة لما تحب تمسح الكاش القديم.
  */
-const CACHE = 'mozakrati-v1';
-const CORE = ['/', '/index.html', '/manifest.json', '/favicon.png', '/icons/icon-192.png', '/icons/icon-512.png'];
+const CACHE = 'mozakrati-v2';
+// المسار اللي الموقع شغال عليه ('/' أو '/app/' على GitHub Pages)
+const BASE = new URL(self.registration.scope).pathname;
+const INDEX = BASE + 'index.html';
+const CORE = [BASE, INDEX, 'manifest.json', 'favicon.png', 'icons/icon-192.png', 'icons/icon-512.png'].map((p) =>
+  p.startsWith('/') ? p : BASE + p,
+);
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -36,10 +41,10 @@ self.addEventListener('fetch', (event) => {
       fetch(request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put('/index.html', copy));
+          caches.open(CACHE).then((cache) => cache.put(INDEX, copy));
           return response;
         })
-        .catch(() => caches.match('/index.html').then((r) => r || caches.match('/'))),
+        .catch(() => caches.match(INDEX).then((r) => r || caches.match(BASE))),
     );
     return;
   }

@@ -30,7 +30,7 @@ export async function scheduleAt(when: number, title: string, body: string, _kin
       // لو الصفحة قدام المستخدم، المؤقت نفسه بيشغّل الصوت
       if (Notification.permission !== 'granted' || document.visibilityState === 'visible') return;
       try {
-        new Notification(title, { body, icon: '/icons/icon-192.png', lang: 'en', dir: 'ltr' });
+        new Notification(title, { body, icon: `${process.env.EXPO_BASE_URL ?? ''}/icons/icon-192.png`, lang: 'en', dir: 'ltr' });
       } catch {
         // بعض المتصفحات (زي كروم على أندرويد) محتاجة service worker للإشعارات
       }

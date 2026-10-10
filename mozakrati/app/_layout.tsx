@@ -13,7 +13,7 @@ function useServiceWorker() {
   useEffect(() => {
     if (Platform.OS !== 'web' || __DEV__) return;
     if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) return;
-    navigator.serviceWorker.register('/sw.js').catch(() => undefined);
+    navigator.serviceWorker.register(`${process.env.EXPO_BASE_URL ?? ''}/sw.js`).catch(() => undefined);
   }, []);
 }
 
