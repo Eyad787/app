@@ -1,178 +1,92 @@
-# مصاريفي 💰
+# صورة رسمية — ID / passport photos in the browser
 
-تطبيق موبايل بسيط لتسجيل ومتابعة مصاريفك الشخصية، بيشتغل على **Android** و **iOS**.
-الواجهة عربي بالكامل (من اليمين للشمال)، وبيدعم الوضع الفاتح والداكن تلقائياً، وكل بياناتك بتتحفظ على موبايلك بس، من غير إنترنت ولا سيرفر.
+Turns a selfie into an official-style ID or passport photo **entirely on the user's device**.
+There is no backend: images never leave the browser. MediaPipe runs locally via WebAssembly.
 
-## المميزات
+Outputs:
+1. A single photo JPG at the type's pixel size (300 DPI), with a max-file-size slider.
+2. A 10×15 cm (4×6 in) print sheet at 300 DPI (1181×1772 px), as JPG and PDF, with cut lines.
 
-- **الرئيسية:** إجمالي مصاريف الشهر، شريط الميزانية (بيبقى أحمر لو عديتها)، مصاريف النهارده والأسبوع ده، وآخر المصاريف مقسّمة حسب اليوم.
-- **إضافة/تعديل مصروف:** المبلغ، النوع (أكل، مواصلات، فواتير، خروج، تسوق، صحة، تعليم، غيره)، التاريخ، وملاحظة اختيارية.
-- **الإحصائيات:** رسم دائري حسب النوع، رسم أعمدة للأيام، مقارنة بالشهر اللي فات، أكتر نوع اتصرف فيه، ومتوسط الصرف اليومي.
-- **كل المصاريف:** بحث في الملاحظات، فلتر بالنوع والشهر، اضغط للتعديل، واسحب أو اضغط مطولاً للحذف.
-- **الإعدادات:** ميزانية شهرية، تغيير العملة (الافتراضي ج.م)، تصدير CSV ومشاركته، مسح كل البيانات.
+## Setup & run
 
----
-
-## أولاً: تشغيل التطبيق على موبايلك بـ Expo Go
-
-### 1. جهّز الكمبيوتر
-
-1. نزّل وثبّت **Node.js** (نسخة 20 أو أحدث) من: https://nodejs.org
-   - اختار نسخة **LTS**.
-   - للتأكد إنه اتثبت، افتح الـ Terminal (أو Command Prompt في ويندوز) واكتب:
-     ```bash
-     node -v
-     ```
-     المفروض يطلعلك رقم النسخة، مثلاً `v22.x.x`.
-2. (اختياري) ثبّت **Git** لو هتنزّل المشروع بيه: https://git-scm.com
-
-### 2. نزّل المشروع وثبّت المكتبات
+Requires Node 22.18+ (the build-time prerender script imports TypeScript directly).
 
 ```bash
-git clone <رابط-المستودع>
-cd app
 npm install
+npm run dev        # http://localhost:5173
 ```
 
-> لو نزّلت المشروع كملف ZIP، فكّه وادخل على الفولدر بالأمر `cd`، وبعدين اكتب `npm install`.
-
-### 3. ثبّت Expo Go على الموبايل
-
-- **أندرويد:** من Google Play ابحث عن **Expo Go**.
-- **آيفون:** من App Store ابحث عن **Expo Go**.
-
-> مهم: التطبيق معمول على **Expo SDK 57**، فلازم تكون نسخة Expo Go على موبايلك أحدث نسخة من المتجر.
-
-### 4. شغّل التطبيق
-
-1. في الـ Terminal جوه فولدر المشروع اكتب:
-   ```bash
-   npx expo start
-   ```
-2. هيظهرلك **QR Code** في الـ Terminal.
-3. خلّي الموبايل والكمبيوتر على **نفس شبكة الواي فاي**.
-4. افتح الكود:
-   - **أندرويد:** افتح Expo Go واضغط **Scan QR code** وصوّر الكود.
-   - **آيفون:** افتح تطبيق **الكاميرا** العادي وصوّر الكود، وهيظهرلك إشعار يفتحه في Expo Go.
-5. استنى شوية لحد ما التطبيق يتحمّل، وكده خلاص 🎉
-
-### لو حصلت مشكلة
-
-| المشكلة | الحل |
-|---|---|
-| الموبايل مش بيوصل للكمبيوتر | شغّل بالأمر `npx expo start --tunnel` (بيشتغل حتى لو الشبكة مختلفة). |
-| الاتجاه ظاهر من الشمال لليمين | الاتجاه العربي متفعّل من `app.json` (`extra.forcesRTL`). اقفل Expo Go خالص (من قايمة التطبيقات المفتوحة) وافتحه تاني، وافتح المشروع من جديد. |
-| رسالة إن نسخة الـ SDK مش مدعومة | حدّث Expo Go من المتجر لآخر نسخة. |
-| أي مشكلة غريبة بعد تعديل الكود | شغّل `npx expo start --clear` عشان يمسح الكاش. |
-
----
-
-## ثانياً: عمل ملف APK بـ EAS Build
-
-ملف الـ APK ده تقدر تثبّته على أي موبايل أندرويد من غير Expo Go، وتبعته لأي حد.
-البناء بيحصل على سيرفرات Expo، فمش محتاج Android Studio.
-
-### 1. اعمل حساب Expo
-
-ادخل على https://expo.dev/signup واعمل حساب مجاني.
-
-### 2. سجّل دخول من الكمبيوتر
+`npm run dev` / `npm run build` first run `scripts/fetch-assets.mjs`, which copies the MediaPipe
+WASM runtime into `public/mediapipe/` and downloads the two models into `public/models/`
+(~4 MB, one time). These are git-ignored and served from your own domain.
 
 ```bash
-npx eas-cli@latest login
+npm run build      # type-check, bundle, prerender SEO pages, write sitemap.xml + robots.txt
+npm run preview    # serve dist/ at http://localhost:4173
 ```
 
-اكتب الإيميل/اسم المستخدم والباسورد بتوع حساب Expo.
+## Deploy to Vercel
 
-### 3. اربط المشروع بحسابك (أول مرة بس)
+1. Import the repo in Vercel (no root directory change needed).
+2. Framework preset: **Vite** (build `npm run build`, output `dist`). Node version: 22.x.
+3. Add the environment variable `VITE_SITE_URL=https://your-domain.com` (used for canonical
+   links, `sitemap.xml` and `robots.txt`).
+4. Deploy. `vercel.json` enables clean URLs and long caching for the models.
 
-```bash
-npx eas-cli@latest init
-```
+Netlify works too (`netlify.toml` is included).
 
-لو سألك يعمل مشروع جديد، اضغط **Y**. الأمر ده هيضيف `projectId` في ملف `app.json`.
-
-### 4. ابني الـ APK
-
-```bash
-npx eas-cli@latest build --platform android --profile preview
-```
-
-- البروفايل `preview` متظبط في ملف `eas.json` إنه يطلّع **APK** على طول.
-- أول مرة هيسألك يعمل **Android Keystore** (مفتاح توقيع التطبيق) — اختار **Yes** وسيبه يعمله لوحده.
-- البناء بياخد من 10 لـ 20 دقيقة تقريباً (حسب الطابور على الحساب المجاني).
-
-### 5. نزّل الـ APK وثبّته
-
-- لما البناء يخلص، هيظهرلك في الـ Terminal **رابط** و **QR Code**.
-- افتح الرابط من الموبايل ونزّل ملف الـ APK، أو نزّله من صفحة المشروع على https://expo.dev.
-- افتح الملف على الموبايل، ولو طلب منك **السماح بتثبيت تطبيقات من مصادر غير معروفة** وافق، وبعدين اضغط **تثبيت**.
-
-> **ملحوظة:** لو عايز ترفع التطبيق على Google Play، استخدم بروفايل `production` (بيطلّع ملف AAB):
-> ```bash
-> npx eas-cli@latest build --platform android --profile production
-> ```
->
-> ولو عايز نسخة iOS، محتاج حساب Apple Developer مدفوع:
-> ```bash
-> npx eas-cli@latest build --platform ios --profile production
-> ```
-
----
-
-## للمطورين
-
-### الأوامر
-
-```bash
-npx expo start      # تشغيل سيرفر التطوير
-npm run typecheck   # التأكد إن مفيش أخطاء TypeScript
-npm test            # تشغيل اختبارات دوال الحسابات
-```
-
-### التقنيات
-
-- React Native + **Expo SDK 57** + TypeScript
-- **Expo Router** للتنقل
-- **AsyncStorage** للحفظ على الموبايل
-- **react-native-svg** للرسوم البيانية
-- كل المكتبات موجودة في Expo Go (مفيش native modules إضافية). حتى منتقي التاريخ والسحب للحذف معمولين بـ JavaScript.
-
-### تنظيم الكود
+## Project layout
 
 ```
-app/                    الشاشات (Expo Router)
-  _layout.tsx           التخطيط الرئيسي + الثيم + مزوّد البيانات
-  expense.tsx           إضافة/تعديل مصروف (?id= للتعديل)
-  (tabs)/
-    _layout.tsx         التابات اللي تحت
-    index.tsx           الرئيسية
-    stats.tsx           الإحصائيات
-    expenses.tsx        كل المصاريف
-    settings.tsx        الإعدادات
-components/             مكونات الواجهة (كروت، رسوم، منتقي التاريخ، صف المصروف...)
-constants/              الألوان، الأنواع، العملات
-lib/
-  calculations.ts       الحسابات: الإجماليات، التجميع حسب النوع واليوم، المقارنة، المتوسط، الفلترة
-  dates.ts              دوال التواريخ (أسماء الشهور والأيام بالعربي، الأسبوع بيبدأ السبت)
-  format.ts             تنسيق المبالغ وتحويل الأرقام العربية (١٢٣) لإنجليزي
-  csv.ts                تحويل المصاريف لـ CSV
-  storage.ts            الحفظ والتحميل من AsyncStorage
-  ExpensesContext.tsx   حالة التطبيق، وبيحفظ فوراً عند أي تعديل
-  __tests__/            اختبارات الدوال
+src/
+  photoTypes.ts          ← ALL photo specs (sizes, background, head/eye ratios). Edit here.
+  config.ts              ← feature flags (watermark, ad slots), site URL
+  seo.ts                 ← Arabic titles/descriptions per page (also used at build time)
+  lib/vision.ts          ← lazy MediaPipe loader (ImageSegmenter + FaceLandmarker)
+  lib/pipeline.ts        ← upload → analyze (faces, mask, measurements, quality issues)
+  segmentation/          ← person mask from the selfie segmenter
+  faceAnalysis/          ← landmarks → eye line, roll, chin, crown; brightness/blur/size checks
+  cropping/              ← layout (scale/rotate/position to the spec) + render
+                           (guided-filter mask refinement, 1–2 px feather, background fill)
+  export/                ← JPEG under a size limit, watermark flag, print sheet + PDF
+  camera/                ← getUserMedia + oval guide + live checks
+  ui/                    ← React screens, i18n (Arabic RTL first, English toggle)
+scripts/
+  fetch-assets.mjs       ← copies WASM, downloads models
+  prerender.mjs          ← static HTML per photo type, sitemap.xml, robots.txt
 ```
 
-### شكل البيانات
+## How the pipeline works
 
-كل مصروف بيتخزن بالشكل ده:
+1. The photo is drawn to a canvas (EXIF orientation applied, max 2000 px).
+2. **FaceLandmarker** finds the face: iris centers → eye line and head roll, landmark 152 → chin.
+3. **ImageSegmenter** (selfie model) gives a person mask; the code walks up through the mask
+   from the forehead to find the top of the hair (the "crown").
+4. The photo is rotated so the eyes are level, scaled so *crown→chin* matches the middle of
+   `headHeightRatio`, and positioned so the eye line matches `eyeLineFromBottomRatio`.
+5. The coarse mask is refined with a guided filter (so edges follow hair and shoulders),
+   feathered 1–2 px, and composited over `bgColor`.
+6. The editor shows live head-height / eye-line readings against the spec, plus zoom, move,
+   rotate and brightness controls.
 
-```ts
-{
-  id: string;          // معرّف فريد
-  amount: number;      // المبلغ (أكبر من صفر)
-  category: string;    // food | transport | bills | outing | shopping | health | education | other
-  date: string;        // YYYY-MM-DD
-  note: string;        // ملاحظة (ممكن تكون فاضية)
-  createdAt: string;   // وقت الإضافة (ISO)
-}
-```
+## Photo specs
+
+Every value in `src/photoTypes.ts` is a **placeholder** marked `// TODO: verify from official source`.
+Confirm each one with the issuing authority before launch. To add a type, add an entry there:
+it automatically gets a picker item, an SEO page at its `slug`, and a sitemap entry (add a
+title and description in `src/seo.ts`).
+
+## Monetization hooks (not integrated)
+
+- `<AdSlot slot="top-banner" />` and `<AdSlot slot="below-result" />` in `src/ui/common.tsx`
+  render empty placeholders. Put the ad network tag inside.
+- `FEATURES.watermarkOnFreeDownloads` in `src/config.ts` (off by default) stamps
+  `WATERMARK_TEXT` on downloaded photos and sheets.
+
+## Notes
+
+- The first time a user picks a photo type, the site downloads ~11 MB of WASM and ~4 MB of
+  models, which are then cached. Nothing ML-related loads on the landing page.
+- On 10×15 cm paper only two 2×2 in (US) photos fit, because two side by side (101.6 mm) are
+  wider than the 100 mm sheet.
+- Final acceptance is always up to the issuing authority; the UI says so.
