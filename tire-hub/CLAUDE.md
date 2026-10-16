@@ -26,7 +26,7 @@ Plain HTML/CSS/JS. No framework, no build step, no npm dependencies. Must keep w
 - `assets/js/main.js` — shared: fills `[data-phone]` from config.
 - `assets/js/order.js` — size selects, phone sanitising (Arabic digits → Latin), validation, summary,
   ref `TH-xxxxxx`, POST to `formEndpoint` (JSON), WhatsApp redirect, reset.
-- `assets/img/` — `logo.webp`, `van.webp` (transparent, side view facing left, wheels at the bottom edge),
+- `assets/img/` — `logo.webp` (version for dark backgrounds: header and footer are always asphalt), `van.webp` (the real branded van, transparent, side view facing left, wheels at the bottom edge),
   `wheel.webp`, `favicon.png`, `og.jpg` (1200×630).
 
 ## Design system
