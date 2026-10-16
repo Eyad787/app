@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>اطلب الخدمة | Tire Hub</title>
+  <meta name="description" content="اطلب تغيير كاوتش عربيتك في مكانك: اكتب بياناتك والعنوان ومقاس الكاوتش، وهنتصل بيك نأكد الطلب والميعاد.">
+  <meta name="theme-color" content="#1b1d20">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/favicon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_EG">
+  <meta property="og:site_name" content="Tire Hub">
+  <meta property="og:title" content="اطلب الخدمة | Tire Hub">
+  <meta property="og:description" content="اكتب بياناتك ومقاس الكاوتش، والفني بييجي يغيّره وهي راكنة قدام بيتك أو شغلك.">
+  <meta property="og:image" content="assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Saira:ital,wdth,wght@1,75,700;1,75,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">تخطّي للمحتوى</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="index.html" aria-label="Tire Hub — الرئيسية">
+        <img src="assets/img/logo.webp" alt="Tire Hub" width="600" height="210">
+      </a>
+      <nav class="main-nav" aria-label="أقسام الموقع">
+        <a href="index.html#service">الخدمة</a>
+        <a href="index.html#how">إزاي بنشتغل</a>
+        <a href="index.html#size">مقاس الكاوتش</a>
+        <a href="index.html#faq">أسئلة</a>
+      </nav>
+      <a class="btn btn-red header-cta" href="order.html" aria-current="page">اطلب الخدمة</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="wrap">
+
+      <div class="order-head" id="orderHead">
+        <nav class="crumbs" aria-label="مسار الصفحة">
+          <a href="index.html">الرئيسية</a>
+          <span aria-hidden="true">‹</span>
+          <span aria-current="page">طلب الخدمة</span>
+        </nav>
+        <h1>طلب تغيير الكاوتش</h1>
+        <p>اكتب بياناتك ومقاس الكاوتش، وهنتصل بيك على الرقم اللي هتكتبه عشان نأكد الطلب والميعاد.</p>
+      </div>
+
+      <div class="order-grid" id="orderGrid">
+        <form class="order-form" id="orderForm" novalidate>
+
+          <fieldset class="fs">
+            <legend><span class="n sw">01</span>بياناتك</legend>
+            <div class="row">
+              <div class="field">
+                <label for="name">الاسم</label>
+                <input class="input" id="name" name="name" type="text" autocomplete="name" placeholder="مثال: أحمد محمود" aria-describedby="err-name">
+                <p class="field-err" id="err-name" hidden></p>
+              </div>
+              <div class="field">
+                <label for="phone">رقم الموبايل</label>
+                <input class="input" id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" maxlength="11" dir="ltr" placeholder="01XXXXXXXXX" aria-describedby="err-phone">
+                <p class="field-err" id="err-phone" hidden></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="fs">
+            <legend><span class="n sw">02</span>العنوان</legend>
+            <div class="row">
+              <div class="field">
+                <label for="governorate">المحافظة</label>
+                <select class="select" id="governorate" name="governorate" aria-describedby="err-governorate">
+                  <option value="">اختار</option>
+                  <option>القاهرة</option>
+                  <option>الجيزة</option>
+                  <option>القليوبية</option>
+                  <option>الإسكندرية</option>
+                  <option>محافظة تانية</option>
+                </select>
+                <p class="field-err" id="err-governorate" hidden></p>
+              </div>
+              <div class="field">
+                <label for="district">المنطقة / الحي</label>
+                <input class="input" id="district" name="district" type="text" autocomplete="address-level3" aria-describedby="err-district">
+                <p class="field-err" id="err-district" hidden></p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="address">العنوان بالتفصيل</label>
+              <input class="input" id="address" name="address" type="text" autocomplete="street-address" placeholder="الشارع، رقم العمارة، الدور" aria-describedby="err-address">
+              <p class="field-err" id="err-address" hidden></p>
+            </div>
+            <div class="field">
+              <label for="landmark">علامة مميزة <span class="opt">(اختياري)</span></label>
+              <input class="input" id="landmark" name="landmark" type="text">
+            </div>
+          </fieldset>
+
+          <fieldset class="fs">
+            <legend><span class="n sw">03</span>الكاوتش <span class="hint">المقاس مكتوب على جنب الكاوتش</span></legend>
+
+            <div class="field" role="group" aria-labelledby="size-label" aria-describedby="err-size">
+              <span class="label" id="size-label">المقاس</span>
+              <div class="size-picker">
+                <div class="part">
+                  <label for="width">العرض</label>
+                  <select class="select" id="width" name="width"><option value="">---</option></select>
+                </div>
+                <span class="slash sw" aria-hidden="true">/</span>
+                <div class="part">
+                  <label for="aspect">الارتفاع %</label>
+                  <select class="select" id="aspect" name="aspect"><option value="">--</option></select>
+                </div>
+                <div class="part">
+                  <label for="rim">الجنط</label>
+                  <select class="select" id="rim" name="rim"><option value="">R--</option></select>
+                </div>
+              </div>
+              <p class="field-err" id="err-size" hidden></p>
+              <label class="check">
+                <input type="checkbox" id="unsure" name="unsure">
+                <span>مش عارف المقاس، هكتب نوع العربية في الملاحظات</span>
+              </label>
+            </div>
+
+            <div class="row">
+              <div class="field">
+                <span class="label" id="qty-label">العدد</span>
+                <div class="stepper" role="group" aria-labelledby="qty-label">
+                  <button type="button" id="qtyMinus" aria-label="أقل">−</button>
+                  <output id="qty" class="sw" aria-live="polite">1</output>
+                  <button type="button" id="qtyPlus" aria-label="أكتر">+</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="field" role="radiogroup" aria-labelledby="brand-label">
+              <span class="label" id="brand-label">الماركة المفضلة</span>
+              <div class="chips">
+                <label class="chip"><input type="radio" name="brand" value="أي ماركة" checked><span>أي ماركة</span></label>
+                <label class="chip brand"><input type="radio" name="brand" value="Michelin"><span>Michelin</span></label>
+                <label class="chip brand"><input type="radio" name="brand" value="Continental"><span>Continental</span></label>
+                <label class="chip brand"><input type="radio" name="brand" value="Pirelli"><span>Pirelli</span></label>
+                <label class="chip brand"><input type="radio" name="brand" value="Toyo"><span>Toyo</span></label>
+                <label class="chip brand"><input type="radio" name="brand" value="Crosswind"><span>Crosswind</span></label>
+                <label class="chip brand"><input type="radio" name="brand" value="Marshal"><span>Marshal</span></label>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="fs">
+            <legend><span class="n sw">04</span>الميعاد <span class="hint">هنأكده معاك في المكالمة</span></legend>
+            <div class="row">
+              <div class="field">
+                <label for="date">اليوم</label>
+                <input class="input" id="date" name="date" type="date" aria-describedby="err-date">
+                <p class="field-err" id="err-date" hidden></p>
+              </div>
+              <div class="field" role="radiogroup" aria-labelledby="slot-label">
+                <span class="label" id="slot-label">الوقت</span>
+                <div class="chips">
+                  <label class="chip"><input type="radio" name="slot" value="الصبح"><span>الصبح</span></label>
+                  <label class="chip"><input type="radio" name="slot" value="بعد الضهر"><span>بعد الضهر</span></label>
+                  <label class="chip"><input type="radio" name="slot" value="بالليل"><span>بالليل</span></label>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label for="notes">ملاحظات <span class="opt">(اختياري)</span></label>
+              <textarea class="textarea" id="notes" name="notes" placeholder="نوع العربية وموديلها، أو أي حاجة عايز الفني يعرفها" aria-describedby="err-notes"></textarea>
+              <p class="field-err" id="err-notes" hidden></p>
+            </div>
+          </fieldset>
+
+          <div class="submit-zone">
+            <p class="form-error" id="formError" role="alert" hidden></p>
+            <button class="btn btn-red" type="submit" id="submitBtn">ابعت الطلب</button>
+            <p class="submit-note">بإرسال الطلب، هنتصل بيك على رقمك عشان نأكد التفاصيل قبل ما الفني يتحرك.</p>
+          </div>
+        </form>
+
+        <aside class="summary" aria-label="ملخص الطلب">
+          <p class="label-sm">مقاس الكاوتش</p>
+          <p class="s-size sw is-empty" id="sumSize">---/-- R--</p>
+          <p class="s-qty" id="sumQty">كاوتش واحد</p>
+          <dl>
+            <div><dt>الاسم</dt><dd id="sumName" class="is-empty">لسه</dd></div>
+            <div><dt>الموبايل</dt><dd id="sumPhone" class="is-empty">لسه</dd></div>
+            <div><dt>العنوان</dt><dd id="sumAddress" class="is-empty">لسه</dd></div>
+            <div><dt>الماركة</dt><dd id="sumBrand">أي ماركة</dd></div>
+            <div><dt>الميعاد</dt><dd id="sumWhen" class="is-empty">لسه</dd></div>
+          </dl>
+        </aside>
+      </div>
+
+      <section class="confirm" id="confirm" hidden aria-labelledby="confirm-title" tabindex="-1">
+        <div class="ok-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+        </div>
+        <h2 id="confirm-title">طلبك وصل</h2>
+        <p class="msg" id="confirmMsg"></p>
+        <p class="ref">رقم الطلب <span class="sw" id="confirmRef"></span></p>
+        <p class="wa-fallback" id="waFallback" hidden>
+          <a id="waLink" href="#" target="_blank" rel="noopener">لو واتساب ما فتحش لوحده، اضغط هنا وابعت الطلب</a>
+        </p>
+        <div class="confirm-actions">
+          <a class="btn btn-red" href="index.html">الرجوع للرئيسية</a>
+          <button class="btn btn-ghost" type="button" id="newOrder">طلب جديد</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot-brand">
+        <a href="index.html" aria-label="Tire Hub — الرئيسية"><img src="assets/img/logo.webp" alt="Tire Hub" width="600" height="210" loading="lazy"></a>
+        <span class="foot-tag">تغيير الكاوتش في مكانك</span>
+      </div>
+      <p class="foot-contact">للتواصل: <span data-phone>01X XXXX XXXX</span></p>
+    </div>
+  </footer>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/order.js"></script>
+</body>
+</html>
