@@ -1,4 +1,4 @@
-/* order.html: live summary, validation, submit (endpoint and/or WhatsApp) */
+/* order.html: live summary, validation, submit (email via FormSubmit, JSON endpoint, WhatsApp) */
 (function () {
   'use strict';
 
@@ -384,6 +384,49 @@
     confirmBox.focus({ preventScroll: true });
   }
 
+  function postJSON(url, payload) {
+    // Google Apps Script can't answer a CORS preflight, so send it as a "simple" request
+    var simple = /script\.google(usercontent)?\.com/.test(url);
+    return fetch(url, {
+      method: 'POST',
+      headers: simple
+        ? { 'Content-Type': 'text/plain;charset=utf-8' }
+        : { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res;
+    });
+  }
+
+  // Emails the order to config.email through FormSubmit (no account needed;
+  // the very first order sends an activation link to that inbox).
+  function sendEmail(to, d, ref, message) {
+    var fields = {
+      _subject: 'طلب تغيير كاوتش جديد — ' + ref,
+      _template: 'table',
+      _captcha: 'false',
+      'رقم الطلب': ref,
+      'الاسم': d.name,
+      'الموبايل': d.phone,
+      'المحافظة': d.governorate,
+      'المنطقة': d.district,
+      'العنوان': d.address,
+      'علامة مميزة': d.landmark || '—',
+      'المقاس': d.size,
+      'العدد': d.quantityText,
+      'الماركة': d.brand,
+      'الميعاد': d.when,
+      'ملاحظات': d.notes || '—',
+      'الرسالة كاملة': message
+    };
+    return postJSON('https://formsubmit.co/ajax/' + encodeURIComponent(to), fields)
+      .then(function (res) { return res.json(); })
+      .then(function (body) {
+        if (body && String(body.success) === 'false') throw new Error(body.message || 'not sent');
+      });
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (sending) return;
@@ -407,18 +450,16 @@
       }
     };
 
+    var requests = [];
+    var email = String(cfg.email || '').trim();
+    if (email) requests.push(sendEmail(email, d, ref, message));
     var endpoint = String(cfg.formEndpoint || '').trim();
-    if (!endpoint) { finish(); return; }
+    if (endpoint) requests.push(postJSON(endpoint, Object.assign({ ref: ref, message: message }, d)));
+    if (!requests.length) { finish(); return; }
 
     setSending(true);
-    var payload = Object.assign({ ref: ref, message: message }, d);
-    fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-      .then(function (res) {
-        if (!res.ok) throw new Error('HTTP ' + res.status);
+    Promise.all(requests)
+      .then(function () {
         setSending(false);
         finish();
       })

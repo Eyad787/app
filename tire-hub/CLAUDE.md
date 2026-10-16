@@ -11,7 +11,7 @@ Plain HTML/CSS/JS. No framework, no build step, no npm dependencies. Must keep w
 - Never invent prices, discounts, guarantees, delivery/arrival times, coverage areas, ratings or reviews.
   Coverage is always "we confirm on the call".
 - Never hard-code a phone number. Phone / WhatsApp / form endpoint come from `assets/js/config.js`
-  (`window.TIREHUB = { phone, whatsapp, formEndpoint }`). Footer shows `01X XXXX XXXX` when `phone` is empty.
+  (`window.TIREHUB = { phone, whatsapp, email, formEndpoint }`). Footer shows `01X XXXX XXXX` when `phone` is empty.
 - Copy is Egyptian Arabic. Keep the existing wording unless asked to change it.
 - No emoji, no purple/blue gradients, no cream+serif look, no wall of identical rounded shadow cards,
   no centered-everything layouts.
@@ -50,8 +50,10 @@ Plain HTML/CSS/JS. No framework, no build step, no npm dependencies. Must keep w
 - Validation messages appear after the first submit attempt, then update on blur (and clear while typing).
 - First invalid field gets focused and scrolled into view. Errors are inline, never `alert()`.
 - Phone: `/^01[0125][0-9]{8}$/`. Size required unless "مش عارف المقاس" is checked; then notes are required.
-- Submit: build message → POST JSON if `formEndpoint` (on failure show inline error and stop) →
-  show confirmation → redirect to `wa.me` if `whatsapp` (with a manual fallback link).
+- Submit: build message → if `email`, POST to FormSubmit (`https://formsubmit.co/ajax/<email>`, Arabic-labelled
+  fields, `_template: table`; `success: "false"` counts as failure) and/or POST JSON to `formEndpoint`
+  (Google Apps Script URLs are sent as `text/plain` to avoid a CORS preflight) → on any failure show the inline
+  error and stop → show confirmation → redirect to `wa.me` if `whatsapp` (with a manual fallback link).
 
 ## Testing
 
