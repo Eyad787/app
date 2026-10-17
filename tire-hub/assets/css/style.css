@@ -1066,14 +1066,6 @@ a { color: inherit; }
   font-weight: 500;
 }
 .ref .sw { font-size: 1.6rem; color: var(--ink); }
-.wa-fallback {
-  margin-top: 22px;
-  padding: 14px 16px;
-  border: 1.5px dashed var(--ok);
-  border-radius: var(--radius);
-}
-.wa-fallback[hidden] { display: none; }
-.wa-fallback a { color: var(--ok); font-weight: 600; }
 .confirm-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 
 @media (max-width: 960px) {

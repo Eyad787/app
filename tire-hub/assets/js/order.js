@@ -1,4 +1,4 @@
-/* order.html: live summary, validation, submit (email via FormSubmit, JSON endpoint, WhatsApp) */
+/* order.html: live summary, validation, submit (email via FormSubmit, optional JSON endpoint) */
 (function () {
   'use strict';
 
@@ -337,7 +337,7 @@
     submitBtn.textContent = on ? 'بيتبعت…' : 'ابعت الطلب';
   }
 
-  function showConfirmation(d, ref, waUrl) {
+  function showConfirmation(d, ref) {
     var msg = $('confirmMsg');
     msg.textContent = '';
     var add = function (text, bold) {
@@ -368,14 +368,6 @@
     add(' عشان نأكد العنوان والميعاد.');
 
     $('confirmRef').textContent = ref;
-
-    var fb = $('waFallback');
-    if (waUrl) {
-      $('waLink').href = waUrl;
-      fb.hidden = false;
-    } else {
-      fb.hidden = true;
-    }
 
     grid.hidden = true;
     head.hidden = true;
@@ -440,14 +432,9 @@
     var ref = 'TH-' + String(Date.now()).slice(-6);
     var message = buildMessage(d, ref);
 
-    var wa = String(cfg.whatsapp || '').replace(/\D/g, '');
-    var waUrl = wa ? 'https://wa.me/' + wa + '?text=' + encodeURIComponent(message) : '';
 
     var finish = function () {
-      showConfirmation(d, ref, waUrl);
-      if (waUrl) {
-        setTimeout(function () { window.location.href = waUrl; }, 700);
-      }
+      showConfirmation(d, ref);
     };
 
     var requests = [];

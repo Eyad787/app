@@ -10,8 +10,8 @@ Plain HTML/CSS/JS. No framework, no build step, no npm dependencies. Must keep w
   Never mention repair, balancing, alignment, oil change, battery, towing or roadside assistance.
 - Never invent prices, discounts, guarantees, delivery/arrival times, coverage areas, ratings or reviews.
   Coverage is always "we confirm on the call".
-- Never hard-code a phone number. Phone / WhatsApp / form endpoint come from `assets/js/config.js`
-  (`window.TIREHUB = { phone, whatsapp, email, formEndpoint }`). Footer shows `01X XXXX XXXX` when `phone` is empty.
+- Never hard-code a phone number. Phone / order email / form endpoint come from `assets/js/config.js`
+  (`window.TIREHUB = { phone, email, formEndpoint }`). Footer shows `01X XXXX XXXX` when `phone` is empty.
 - Copy is Egyptian Arabic. Keep the existing wording unless asked to change it.
 - No emoji, no purple/blue gradients, no cream+serif look, no wall of identical rounded shadow cards,
   no centered-everything layouts.
@@ -25,7 +25,8 @@ Plain HTML/CSS/JS. No framework, no build step, no npm dependencies. Must keep w
 - `assets/js/config.js` — the only file the owner edits.
 - `assets/js/main.js` — shared: fills `[data-phone]` from config.
 - `assets/js/order.js` — size selects, phone sanitising (Arabic digits → Latin), validation, summary,
-  ref `TH-xxxxxx`, POST to `formEndpoint` (JSON), WhatsApp redirect, reset.
+  ref `TH-xxxxxx`, email via FormSubmit, POST to `formEndpoint` (JSON), reset.
+  Orders go by email only: the owner chose no WhatsApp hand-off, so don't add one back.
 - `assets/img/` — `logo.webp` (version for dark backgrounds: header and footer are always asphalt), `van.webp` (the real branded van, transparent, side view facing left, wheels at the bottom edge),
   `wheel.webp`, `favicon.png`, `og.jpg` (1200×630).
 
@@ -53,7 +54,7 @@ Plain HTML/CSS/JS. No framework, no build step, no npm dependencies. Must keep w
 - Submit: build message → if `email`, POST to FormSubmit (`https://formsubmit.co/ajax/<email>`, Arabic-labelled
   fields, `_template: table`; `success: "false"` counts as failure) and/or POST JSON to `formEndpoint`
   (Google Apps Script URLs are sent as `text/plain` to avoid a CORS preflight) → on any failure show the inline
-  error and stop → show confirmation → redirect to `wa.me` if `whatsapp` (with a manual fallback link).
+  error and stop → show confirmation.
 
 ## Testing
 
