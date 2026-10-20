@@ -15,7 +15,7 @@ window.TIREHUB = {
   // مثال: 'tirehub@gmail.com'
   // أول طلب بس: هيوصلك إيميل من FormSubmit فيه زرار Activate، دوس عليه مرة واحدة،
   // وبعد كده كل الطلبات هتوصلك على طول.
-  email: '',
+  email: 'tirehub.orders@gmail.com',
 
   // (اختياري، للمتقدمين) لينك تاني بيستقبل الطلب كـ JSON بطريقة POST،
   // زي Formspree أو Google Apps Script. سيبه فاضي لو مش محتاجه.
