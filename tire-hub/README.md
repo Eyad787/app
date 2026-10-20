@@ -88,5 +88,5 @@ python3 -m http.server 8080
 
 ### بعد الرفع
 
-- في `index.html` و `order.html` غيّر `og:image` للينك الكامل للصورة، مثلاً `https://tirehub.example/assets/img/og.jpg`، عشان صورة المشاركة تظهر في واتساب وفيسبوك.
+- الموقع شغال على `https://tirehub-lyart.vercel.app`. لو غيّرت الدومين، غيّر اللينك ده في `index.html` و `order.html` (في `canonical` و `og:url` و `og:image`)، عشان صورة المشاركة تظهر في واتساب وفيسبوك.
 - جرّب تبعت طلب من الموبايل واتأكد إنه وصلك.
